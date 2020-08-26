@@ -108,6 +108,31 @@ li {
 .tracks .track .bracket {
   border-bottom: 1px solid white;
   border-right: 1px solid white;
+  color: white;
+  display: grid;
+  place-content: center;
+}
+
+.tracks .track .bracket.safe-bracket {
+  font-size: 2.1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.tracks .track .bracket.red-bracket {
+  background-color: #f23b3b;
+}
+
+.tracks .track .bracket.green-bracket {
+  background-color: #328b32;
+}
+
+.tracks .track .bracket.blue-bracket {
+  background-color: #7171bb;
+}
+
+.tracks .track .bracket.orange-bracket {
+  background-color: #34ea26;
 }
 
 .tracks.tracks-vertical {
@@ -167,4 +192,43 @@ li {
   width: 5rem;
   background-color: white;
   border-radius: 7px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.player {
+  height: 3rem;
+  width: 3rem;
+  border-radius: 50%;
+  position: relative;
+}
+
+.player.red-player {
+  background-color: #f23b3b;
+}
+
+.player.green-player {
+  background-color: #328b32;
+}
+
+.player.blue-player {
+  background-color: #7171bb;
+}
+
+.player.orange-player {
+  background-color: #34ea26;
+}
+
+.player::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 1.5rem;
+  height: 1.5rem;
+  background-color: transparent;
+  border-radius: 50%;
+  border: 3px solid white;
 }

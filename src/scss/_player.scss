@@ -1,0 +1,35 @@
+.player {
+	height: 3rem;
+	width: 3rem;
+	border-radius: 50%;
+	position: relative;
+
+	&.red-player {
+		background-color: $color-red;
+	}
+
+	&.green-player {
+		background-color: $color-green;
+	}
+
+	&.blue-player {
+		background-color: $color-blue;
+	}
+
+	&.orange-player {
+		background-color: $color-orange;
+	}
+
+	&::after {
+		content: "";
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: 1.5rem;
+		height: 1.5rem;
+		background-color: transparent;
+		border-radius: 50%;
+		border: 3px solid white;
+	}
+}

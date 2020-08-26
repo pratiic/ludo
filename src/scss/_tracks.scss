@@ -7,6 +7,31 @@
 		.bracket {
 			border-bottom: 1px solid white;
 			border-right: 1px solid white;
+			color: white;
+			display: grid;
+			place-content: center;
+
+			&.safe-bracket {
+				font-size: 2.1rem;
+				font-weight: 700;
+				text-transform: uppercase;
+			}
+
+			&.red-bracket {
+				background-color: $color-red;
+			}
+
+			&.green-bracket {
+				background-color: $color-green;
+			}
+
+			&.blue-bracket {
+				background-color: $color-blue;
+			}
+
+			&.orange-bracket {
+				background-color: $color-orange;
+			}
 		}
 	}
 

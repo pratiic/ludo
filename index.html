@@ -32,33 +32,209 @@
 	</head>
 	<body>
 		<div class="game-board">
-			<div class="color-house color-house-red"></div>
-			<div class="tracks tracks-vertical">
-				<div class="track track-vertical"></div>
-				<div class="track track-vertical"></div>
-				<div class="track track-vertical"></div>
-			</div>
-			<div class="color-house color-house-green"></div>
+			<!-- RED HOUSE -->
+			<div class="color-house color-house-red">
+				<div class="room red-room">
+					<div class="player red-player"></div>
+				</div>
 
-			<div class="tracks tracks-horizontal">
-				<div class="track track-horizontal"></div>
-				<div class="track track-horizontal"></div>
-				<div class="track track-horizontal"></div>
+				<div class="room red-room">
+					<div class="player red-player"></div>
+				</div>
+
+				<div class="room red-room">
+					<div class="player red-player"></div>
+				</div>
+
+				<div class="room red-room">
+					<div class="player red-player"></div>
+				</div>
 			</div>
+
+			<!-- SECOND TRACK -->
+			<div class="tracks tracks-vertical">
+				<div class="track track-vertical">
+					<div class="bracket" id="bracket10">10</div>
+					<div class="bracket" id="bracket9">9</div>
+					<div class="bracket safe-bracket" id="bracket8">8</div>
+					<div class="bracket" id="bracket7">7</div>
+					<div class="bracket" id="bracket6">6</div>
+				</div>
+
+				<div class="track track-vertical">
+					<div class="bracket" id="bracket11">11</div>
+					<div class="bracket green-bracket" id="bracket49">49</div>
+					<div class="bracket green-bracket" id="bracket50">50</div>
+					<div class="bracket green-bracket" id="bracket51">51</div>
+					<div class="bracket green-bracket" id="bracket52">52</div>
+				</div>
+
+				<div class="track track-vertical">
+					<div class="bracket" id="bracket12">12</div>
+					<div
+						class="bracket green-bracket safe-bracket"
+						id="bracket13"
+					>
+						13
+					</div>
+					<div class="bracket" id="bracket14">14</div>
+					<div class="bracket" id="bracket15">15</div>
+					<div class="bracket" id="bracket16">16</div>
+				</div>
+			</div>
+
+			<!-- GREEN HOUSE -->
+			<div class="color-house color-house-green">
+				<div class="room green-room">
+					<div class="player green-player"></div>
+				</div>
+
+				<div class="room green-room">
+					<div class="player green-player"></div>
+				</div>
+
+				<div class="room green-room">
+					<div class="player green-player"></div>
+				</div>
+
+				<div class="room green-room">
+					<div class="player green-player"></div>
+				</div>
+			</div>
+
+			<!-- FIRST TRACK -->
+			<div class="tracks tracks-horizontal">
+				<div class="track track-horizontal">
+					<div class="bracket" id="bracket1">1</div>
+					<div class="bracket red-bracket safe-bracket" id="bracket2">
+						2
+					</div>
+					<div class="bracket" id="bracket3">3</div>
+					<div class="bracket" id="bracket4">4</div>
+					<div class="bracket" id="bracket5">5</div>
+				</div>
+
+				<div class="track track-horizontal">
+					<div class="bracket" id="bracket44">44</div>
+					<div class="bracket red-bracket" id="bracket45">45</div>
+					<div class="bracket red-bracket" id="bracket46">46</div>
+					<div class="bracket red-bracket" id="bracket47">47</div>
+					<div class="bracket red-bracket" id="bracket48">48</div>
+				</div>
+
+				<div class="track track-horizontal">
+					<div class="bracket" id="bracket43">43</div>
+					<div class="bracket" id="bracket42">42</div>
+					<div class="bracket" id="bracket41">41</div>
+					<div class="bracket" id="bracket40">40</div>
+					<div class="bracket" id="bracket39">39</div>
+				</div>
+			</div>
+
+			<!-- HOME -->
 			<div class="home"></div>
+
+			<!-- THIRD TRACK -->
 			<div class="tracks tracks-horizontal">
-				<div class="track track-horizontal"></div>
-				<div class="track track-horizontal"></div>
-				<div class="track track-horizontal"></div>
+				<div class="track track-horizontal">
+					<div class="bracket" id="bracket17">17</div>
+					<div class="bracket" id="bracket18">18</div>
+					<div class="bracket safe-bracket" id="bracket19">19</div>
+					<div class="bracket" id="bracket20">20</div>
+					<div class="bracket" id="bracket21">21</div>
+				</div>
+
+				<div class="track track-horizontal">
+					<div class="bracket orange-bracket" id="bracket56">56</div>
+					<div class="bracket orange-bracket" id="bracket55">55</div>
+					<div class="bracket orange-bracket" id="bracket54">54</div>
+					<div class="bracket orange-bracket" id="bracket53">53</div>
+					<div class="bracket" id="bracket22">22</div>
+				</div>
+
+				<div class="track track-horizontal">
+					<div class="bracket" id="bracket27">27</div>
+					<div class="bracket" id="bracket26">26</div>
+					<div class="bracket" id="bracket25">25</div>
+					<div
+						class="bracket orange-bracket safe-bracket"
+						id="bracket24"
+					>
+						24
+					</div>
+					<div class="bracket" id="bracket23">23</div>
+				</div>
 			</div>
 
-			<div class="color-house color-house-blue"></div>
-			<div class="tracks tracks-vertical">
-				<div class="track track-vertical"></div>
-				<div class="track track-vertical"></div>
-				<div class="track track-vertical"></div>
+			<!-- BLUE HOUSE -->
+			<div class="color-house color-house-blue">
+				<div class="room blue-room">
+					<div class="player blue-player"></div>
+				</div>
+
+				<div class="room blue-room">
+					<div class="player blue-player"></div>
+				</div>
+
+				<div class="room blue-room">
+					<div class="player blue-player"></div>
+				</div>
+
+				<div class="room blue-room">
+					<div class="player blue-player"></div>
+				</div>
 			</div>
-			<div class="color-house color-house-orange"></div>
+
+			<!-- FOURTH TRACK -->
+			<div class="tracks tracks-vertical">
+				<div class="track track-vertical">
+					<div class="bracket" id="bracket38">38</div>
+					<div class="bracket" id="bracket37">37</div>
+					<div class="bracket" id="bracket36">36</div>
+					<div
+						class="bracket blue-bracket safe-bracket"
+						id="bracket35"
+					>
+						35
+					</div>
+					<div class="bracket" id="bracket34">34</div>
+				</div>
+
+				<div class="track track-vertical">
+					<div class="bracket blue-bracket" id="bracket60">60</div>
+					<div class="bracket blue-bracket" id="bracket59">59</div>
+					<div class="bracket blue-bracket" id="bracket58">58</div>
+					<div class="bracket blue-bracket" id="bracket57">57</div>
+					<div class="bracket" id="bracket33">33</div>
+				</div>
+
+				<div class="track track-vertical">
+					<div class="bracket" id="bracket28">28</div>
+					<div class="bracket" id="bracket29">29</div>
+					<div class="bracket safe-bracket" id="bracket30">30</div>
+					<div class="bracket" id="bracket31">31</div>
+					<div class="bracket" id="bracket32">32</div>
+				</div>
+			</div>
+
+			<!-- ORANGE HOUSE -->
+			<div class="color-house color-house-orange">
+				<div class="room orange-room">
+					<div class="player orange-player"></div>
+				</div>
+
+				<div class="room orange-room">
+					<div class="player orange-player"></div>
+				</div>
+
+				<div class="room orange-room">
+					<div class="player orange-player"></div>
+				</div>
+
+				<div class="room orange-room">
+					<div class="player orange-player"></div>
+				</div>
+			</div>
 		</div>
 
 		<script type="module" src="src/javascript/index.js"></script>

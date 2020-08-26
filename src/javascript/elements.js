@@ -6,4 +6,10 @@ export let elements = {
 	tracksHorizontalIndividual: document.querySelectorAll(".track-horizontal"),
 	tracksVerticalIndividual: document.querySelectorAll(".track-vertical"),
 	tracksIndividual: document.querySelectorAll(".track"),
+	redRooms: document.querySelectorAll(".red-room"),
+	greenRooms: document.querySelectorAll(".green-room"),
+	blueRooms: document.querySelectorAll(".bleu-room"),
+	orangeRooms: document.querySelectorAll(".orange-room"),
+	brackets: document.querySelectorAll(".bracket"),
+	safeBrackets: document.querySelectorAll(".safe-bracket"),
 };
