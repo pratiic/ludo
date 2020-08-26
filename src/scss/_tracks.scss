@@ -1,0 +1,40 @@
+.tracks {
+	display: grid;
+
+	.track {
+		display: grid;
+
+		.bracket {
+			border-bottom: 1px solid white;
+			border-right: 1px solid white;
+		}
+	}
+
+	&.tracks-vertical {
+		grid-template-columns: repeat(3, 1fr);
+		border-top: 1px solid white;
+
+		.track {
+			height: 100%;
+			grid-template-rows: repeat(5, 1fr);
+
+			.bracket {
+				width: 100%;
+			}
+		}
+	}
+
+	&.tracks-horizontal {
+		grid-template-rows: repeat(3, 1fr);
+		border-left: 1px solid white;
+
+		.track {
+			width: 100%;
+			grid-template-columns: repeat(5, 1fr);
+
+			.bracket {
+				height: 100%;
+			}
+		}
+	}
+}

@@ -1,0 +1,11 @@
+.game-board {
+	height: 57rem;
+	width: 57rem;
+	//border: 1px solid black;
+	border-radius: 5px;
+	box-shadow: 0 1rem 2rem 0 rgba(0, 0, 0, 0.302);
+	background-color: $color-background;
+	display: grid;
+	grid-template-columns: 38% 24% 38%;
+	grid-template-rows: 38% 24% 38%;
+}

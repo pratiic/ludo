@@ -14,6 +14,11 @@ body {
 	font-family: $font-stack-primary;
 	overflow-x: hidden;
 	font-size: 1.75rem;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: $color-background;
 }
 
 a {

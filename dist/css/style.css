@@ -13,6 +13,12 @@ html {
 body {
   font-family: "Open Sans", sans-serif;
   overflow-x: hidden;
+  font-size: 1.75rem;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #3c2d2d;
 }
 
 a {
@@ -22,44 +28,6 @@ a {
 
 li {
   list-style-type: none;
-}
-
-@media screen and (max-width: 1000px) {
-  html {
-    font-size: 50%;
-  }
-}
-
-@media screen and (max-width: 500px) {
-  html {
-    font-size: 40%;
-  }
-}
-
-@media screen and (max-width: 400px) {
-  html {
-    font-size: 35%;
-  }
-}
-
-.button {
-  padding: 0.5rem 1.3rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  transition: box-shadow 150ms ease-in;
-  transition: background-color 150ms ease-in;
-}
-
-.button:hover {
-  box-shadow: 0 0 0.7rem 0 rgba(0, 0, 0, 0.4);
-  background-color: black;
-  color: white;
-}
-
-.button:active {
-  transform: translateY(1px);
 }
 
 .p-1 {
@@ -116,4 +84,87 @@ li {
 
 .text-small {
   font-size: 1.75rem;
+}
+
+.game-board {
+  height: 57rem;
+  width: 57rem;
+  border-radius: 5px;
+  box-shadow: 0 1rem 2rem 0 rgba(0, 0, 0, 0.302);
+  background-color: #3c2d2d;
+  display: grid;
+  grid-template-columns: 38% 24% 38%;
+  grid-template-rows: 38% 24% 38%;
+}
+
+.tracks {
+  display: grid;
+}
+
+.tracks .track {
+  display: grid;
+}
+
+.tracks .track .bracket {
+  border-bottom: 1px solid white;
+  border-right: 1px solid white;
+}
+
+.tracks.tracks-vertical {
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid white;
+}
+
+.tracks.tracks-vertical .track {
+  height: 100%;
+  grid-template-rows: repeat(5, 1fr);
+}
+
+.tracks.tracks-vertical .track .bracket {
+  width: 100%;
+}
+
+.tracks.tracks-horizontal {
+  grid-template-rows: repeat(3, 1fr);
+  border-left: 1px solid white;
+}
+
+.tracks.tracks-horizontal .track {
+  width: 100%;
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.tracks.tracks-horizontal .track .bracket {
+  height: 100%;
+}
+
+.color-house {
+  display: grid;
+  grid-template-columns: repeat(2, 5rem);
+  grid-column-gap: 3rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.color-house-red {
+  background-color: #f23b3b;
+}
+
+.color-house-green {
+  background-color: #328b32;
+}
+
+.color-house-blue {
+  background-color: #7171bb;
+}
+
+.color-house-orange {
+  background-color: #34ea26;
+}
+
+.color-house .room {
+  height: 5rem;
+  width: 5rem;
+  background-color: white;
+  border-radius: 7px;
 }
