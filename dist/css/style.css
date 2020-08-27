@@ -197,6 +197,12 @@ li {
   align-items: center;
 }
 
+.home {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .player {
   height: 3rem;
   width: 3rem;
@@ -231,4 +237,95 @@ li {
   background-color: transparent;
   border-radius: 50%;
   border: 3px solid white;
+}
+
+.dice {
+  background-color: white;
+  height: 4.2rem;
+  width: 4.2rem;
+  border-radius: 5px;
+  position: relative;
+  cursor: pointer;
+}
+
+.dice .point {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dice .point-middle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.dice .face {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  font-size: 1.2rem;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+}
+
+.dice #face1 {
+  z-index: -1;
+}
+
+.dice #face2 {
+  z-index: -1;
+}
+
+.dice #face3 {
+  z-index: -1;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.dice #face4 {
+  z-index: -1;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.dice #face5 {
+  z-index: -1;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.dice #face6 {
+  z-index: -1;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.dice #face1.turn,
+.dice #face2.turn,
+.dice #face3.turn,
+.dice #face4.turn,
+.dice #face5.turn,
+.dice #face6.turn {
+  z-index: 1;
+}
+
+.dice #face1.hide,
+.dice #face2.hide,
+.dice #face3.hide,
+.dice #face4.hide,
+.dice #face5.hide,
+.dice #face6.hide {
+  z-index: -1;
+}
+
+@keyframes diceRollAnimation {
+  0% {
+    transform: scale(1);
+    color: white;
+  }
+  100% {
+    transform: scale(0);
+    color: white;
+  }
 }

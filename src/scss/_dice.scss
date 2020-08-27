@@ -1,0 +1,88 @@
+.dice {
+	background-color: white;
+	height: 4.2rem;
+	width: 4.2rem;
+	border-radius: 5px;
+	position: relative;
+	cursor: pointer;
+
+	.point {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		&-middle {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+		}
+	}
+
+	.face {
+		position: absolute;
+		left: 0;
+		top: 0;
+		height: 100%;
+		width: 100%;
+		font-size: 1.2rem;
+		display: grid;
+		justify-content: center;
+		align-items: center;
+	}
+
+	#face1 {
+		z-index: -1;
+	}
+
+	#face2 {
+		z-index: -1;
+	}
+
+	#face3 {
+		z-index: -1;
+		grid-template-columns: repeat(3, 1fr);
+	}
+
+	#face4 {
+		z-index: -1;
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	#face5 {
+		z-index: -1;
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	#face6 {
+		z-index: -1;
+		grid-template-columns: repeat(3, 1fr);
+	}
+
+	#face1,
+	#face2,
+	#face3,
+	#face4,
+	#face5,
+	#face6 {
+		&.turn {
+			z-index: 1;
+		}
+
+		&.hide {
+			z-index: -1;
+		}
+	}
+}
+
+@keyframes diceRollAnimation {
+	0% {
+		transform: scale(1);
+		color: white;
+	}
+
+	100% {
+		transform: scale(0);
+		color: white;
+	}
+}
