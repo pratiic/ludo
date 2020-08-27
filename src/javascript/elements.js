@@ -18,4 +18,6 @@ export let elements = {
 
 	dice: document.querySelector(".dice"),
 	faces: document.querySelectorAll(".face"),
+
+	turnTags: document.querySelectorAll(".turn-tag"),
 };

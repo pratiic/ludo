@@ -11,9 +11,64 @@ let safeBrackets = [
 	"bracket41",
 ];
 
-let diceRolled = 0;
+let colors = {
+	red: "#f23b3b",
+	green: "#328b32",
+	blue: "#7171bb",
+	orange: "#34ea26",
+};
 
-rollTheDice();
+let players = {
+	red: {
+		start: "spot2",
+		finish: "spot44",
+		next: "green",
+	},
+
+	green: {
+		start: "spot13",
+		finish: "spot11",
+		next: "orange",
+	},
+
+	blue: {
+		start: "spot35",
+		finish: "spot33",
+		next: "red",
+	},
+
+	orange: {
+		start: "spot24",
+		finish: "spot22",
+		next: "blue",
+	},
+};
+
+let currentTurn;
+
+setBoard();
+
+function setBoard() {
+	currentTurn = "red";
+
+	setTurn(currentTurn);
+
+	setTheDice();
+
+	//elements.dice.style.border = ` 3px solid ${colors[turn]} `;
+}
+
+function setTurn(turn) {
+	currentTurn = turn;
+
+	elements.turnTags.forEach((tag) => {
+		if (tag.classList.contains(`${turn}-turn-tag`)) {
+			tag.classList.add("show");
+		} else {
+			tag.classList.remove("show");
+		}
+	});
+}
 
 elements.safeBrackets.forEach((bracket) => {
 	bracket.innerText = "x";
@@ -30,32 +85,28 @@ elements.dice.addEventListener("click", (event) => {
 		event.target.classList.contains("face") ||
 		event.target.classList.contains("point")
 	) {
-		rollTheDice();
+		rollTheDice(currentTurn);
 	}
 });
 
-function rollTheDice() {
-	let faceId = `face${Math.ceil(Math.random() * 6)}`;
+function setTheDice() {
+	let faceId = generateRandomFaceId();
 
-	if (diceRolled !== 0) {
-		showAnimation();
-	}
+	setFace(faceId);
+}
+
+function rollTheDice(turn) {
+	let faceId = generateRandomFaceId();
+
+	showAnimation();
 
 	setTimeout(function () {
-		elements.faces.forEach((face) => {
-			if (face.id === faceId) {
-				face.classList.add("turn");
-				face.classList.remove("hide");
-			} else {
-				face.classList.add("hide");
-				face.classList.remove("turn");
-			}
-		});
+		setFace(faceId);
 
 		hideAnimation();
-	}, 900);
 
-	diceRolled++;
+		setTurn(players[turn].next);
+	}, 900);
 }
 
 function showAnimation() {
@@ -64,4 +115,21 @@ function showAnimation() {
 
 function hideAnimation() {
 	elements.dice.style.animation = "none";
+}
+
+function generateRandomFaceId() {
+	let faceId = `face${Math.ceil(Math.random() * 6)}`;
+	return faceId;
+}
+
+function setFace(faceId) {
+	elements.faces.forEach((face) => {
+		if (face.id === faceId) {
+			face.classList.add("turn");
+			face.classList.remove("hide");
+		} else {
+			face.classList.add("hide");
+			face.classList.remove("turn");
+		}
+	});
 }

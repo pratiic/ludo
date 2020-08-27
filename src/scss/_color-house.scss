@@ -4,6 +4,7 @@
 	grid-column-gap: 3rem;
 	justify-content: center;
 	align-items: center;
+	position: relative;
 
 	&-red {
 		background-color: $color-red;
