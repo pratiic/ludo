@@ -1,3 +1,5 @@
+console.clear();
+
 import { elements } from "./elements.js";
 
 let safeBrackets = [
@@ -68,6 +70,8 @@ function setTurn(turn) {
 			tag.classList.remove("show");
 		}
 	});
+
+	setDiceColor(currentTurn);
 }
 
 elements.safeBrackets.forEach((bracket) => {
@@ -97,6 +101,7 @@ function setTheDice() {
 
 function rollTheDice(turn) {
 	let faceId = generateRandomFaceId();
+	let currentTurnPlayers = elements[`${currentTurn}Players`];
 
 	showAnimation();
 
@@ -105,8 +110,33 @@ function rollTheDice(turn) {
 
 		hideAnimation();
 
-		setTurn(players[turn].next);
+		let faceValue = document.getElementById(faceId).children.length;
+
+		if (faceValue === 6) {
+			currentTurnPlayers.forEach((player) => {
+				glow(player);
+
+				currentTurnPlayers.forEach((player) => {
+					player.addEventListener("click", () => {
+						stopGlowing(currentTurnPlayers);
+						setTurn(players[turn].next);
+					});
+				});
+			});
+		} else {
+			setTurn(players[turn].next);
+		}
 	}, 900);
+}
+
+function glow(player) {
+	player.classList.add("glow");
+}
+
+function stopGlowing(players) {
+	players.forEach((player) => {
+		player.classList.remove("glow");
+	});
 }
 
 function showAnimation() {
@@ -132,4 +162,8 @@ function setFace(faceId) {
 			face.classList.remove("turn");
 		}
 	});
+}
+
+function setDiceColor(currentTurn) {
+	elements.dice.style.backgroundColor = colors[currentTurn];
 }

@@ -20,4 +20,9 @@ export let elements = {
 	faces: document.querySelectorAll(".face"),
 
 	turnTags: document.querySelectorAll(".turn-tag"),
+
+	redPlayers: document.querySelectorAll(".red-player"),
+	greenPlayers: document.querySelectorAll(".green-player"),
+	bluePlayers: document.querySelectorAll(".blue-player"),
+	orangePlayers: document.querySelectorAll(".orange-player"),
 };
