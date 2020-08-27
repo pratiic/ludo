@@ -1,5 +1,3 @@
-console.clear();
-
 import { elements } from "./elements.js";
 
 let safeBrackets = [
@@ -22,31 +20,32 @@ let colors = {
 
 let players = {
 	red: {
-		start: "spot2",
-		finish: "spot44",
+		start: "bracket2",
+		finish: "bracket44",
 		next: "green",
 	},
 
 	green: {
-		start: "spot13",
-		finish: "spot11",
+		start: "bracket13",
+		finish: "bracket11",
 		next: "orange",
 	},
 
-	blue: {
-		start: "spot35",
-		finish: "spot33",
-		next: "red",
+	orange: {
+		start: "bracket24",
+		finish: "bracket22",
+		next: "blue",
 	},
 
-	orange: {
-		start: "spot24",
-		finish: "spot22",
-		next: "blue",
+	blue: {
+		start: "bracket35",
+		finish: "bracket33",
+		next: "red",
 	},
 };
 
 let currentTurn;
+let currentTurnPlayers;
 
 setBoard();
 
@@ -74,9 +73,9 @@ function setTurn(turn) {
 	setDiceColor(currentTurn);
 }
 
-elements.safeBrackets.forEach((bracket) => {
-	bracket.innerText = "x";
-});
+// elements.safeBrackets.forEach((bracket) => {
+// 	bracket.innerText = "x";
+// });
 
 elements.brackets.forEach((bracket) => {
 	if (!bracket.classList.contains("safe-bracket")) {
@@ -99,9 +98,9 @@ function setTheDice() {
 	setFace(faceId);
 }
 
-function rollTheDice(turn) {
+function rollTheDice(currentTurn) {
 	let faceId = generateRandomFaceId();
-	let currentTurnPlayers = elements[`${currentTurn}Players`];
+	currentTurnPlayers = elements[`${currentTurn}Players`];
 
 	showAnimation();
 
@@ -115,19 +114,20 @@ function rollTheDice(turn) {
 		if (faceValue === 6) {
 			currentTurnPlayers.forEach((player) => {
 				glow(player);
-
-				currentTurnPlayers.forEach((player) => {
-					player.addEventListener("click", () => {
-						stopGlowing(currentTurnPlayers);
-						setTurn(players[turn].next);
-					});
-				});
 			});
 		} else {
-			setTurn(players[turn].next);
+			setTurn(players[currentTurn].next);
 		}
 	}, 900);
 }
+
+elements.gameBoard.addEventListener("click", (event) => {
+	if (event.target.classList.contains("glow")) {
+		stopGlowing(currentTurnPlayers);
+		getPlayerOut(event.target);
+		setTurn(players[currentTurn].next);
+	}
+});
 
 function glow(player) {
 	player.classList.add("glow");
@@ -137,6 +137,17 @@ function stopGlowing(players) {
 	players.forEach((player) => {
 		player.classList.remove("glow");
 	});
+}
+
+function getPlayerOut(player) {
+	let playerClass = String(player.classList);
+	let playerId = player.id;
+	let bracketId = players[currentTurn].start;
+	console.log(bracketId);
+	player.remove();
+	document.getElementById(
+		bracketId
+	).innerHTML += ` <div class="${playerClass}" id=${playerId}></div> `;
 }
 
 function showAnimation() {

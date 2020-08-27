@@ -15,6 +15,16 @@
 				font-size: 2.1rem;
 				font-weight: 700;
 				text-transform: uppercase;
+				position: relative;
+
+				.player {
+					border: 2px solid white;
+					position: absolute;
+					left: 50%;
+					top: 50%;
+					transform: translate(-50%, -50%);
+					z-index: 5;
+				}
 			}
 
 			&.red-bracket {

@@ -1,4 +1,6 @@
 export let elements = {
+	gameBoard: document.querySelector(".game-board"),
+
 	colorHouses: document.querySelectorAll(".color-house"),
 
 	redRooms: document.querySelectorAll(".red-room"),
@@ -25,4 +27,5 @@ export let elements = {
 	greenPlayers: document.querySelectorAll(".green-player"),
 	bluePlayers: document.querySelectorAll(".blue-player"),
 	orangePlayers: document.querySelectorAll(".orange-player"),
+	players: document.querySelectorAll(".player"),
 };
