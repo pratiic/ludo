@@ -10,20 +10,45 @@
 			color: white;
 			display: grid;
 			place-content: center;
+			position: relative;
+
+			.player {
+				position: absolute;
+				left: 12%;
+				top: 17%;
+				// transform: translate(-50%, -50%);
+				z-index: 5;
+
+				&.shift-left {
+					left: -5%;
+				}
+
+				&.shift-right {
+					left: 35%;
+				}
+
+				&.shift-top {
+					top: -5%;
+				}
+
+				&.shift-bottom {
+					top: 40%;
+				}
+			}
 
 			&.safe-bracket {
 				font-size: 2.1rem;
 				font-weight: 700;
 				text-transform: uppercase;
 				position: relative;
+			}
 
+			&.red-bracket,
+			&.green-bracket,
+			&.orange-bracket,
+			&.blue-bracket {
 				.player {
 					border: 2px solid white;
-					position: absolute;
-					left: 12%;
-					top: 17%;
-					// transform: translate(-50%, -50%);
-					z-index: 5;
 				}
 			}
 

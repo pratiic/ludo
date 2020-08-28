@@ -136,7 +136,7 @@ function rollTheDice(currentTurn) {
 
 		faceValue = document.getElementById(faceId).children.length;
 
-		if (faceValue === 6) {
+		if (faceValue !== 6) {
 			currentTurnPlayers.forEach((player) => {
 				glow(player);
 			});
@@ -144,9 +144,9 @@ function rollTheDice(currentTurn) {
 			let currentOutsidePlayers = document.querySelectorAll(
 				`.outside-player.${currentTurn}-player`
 			);
+			console.log(currentOutsidePlayers);
 			if (currentOutsidePlayers.length > 0) {
 				Array.from(currentOutsidePlayers).forEach((player) => {
-					console.log(player);
 					glow(player);
 				});
 			} else {
@@ -193,7 +193,6 @@ elements.gameBoard.addEventListener("click", (event) => {
 			movePlayerToBracketId(event.target, players[currentTurn].start);
 		} else {
 			moveForward(event.target, event.target.parentNode.id);
-			setTurn(players[currentTurn].next);
 		}
 	}
 });
@@ -220,21 +219,71 @@ function movePlayerToBracketId(player, nextBracketId) {
 	player.remove();
 
 	bracket.innerHTML += ` <div class="${playerClass}" id=${playerId}></div> `;
+
+	checkEachBracket();
+	// if (bracket.children.length > 1) {
+	// 	if (bracket.children.length === 2) {
+	// 		bracket.children[0].classList.add("shift-left");
+	// 		bracket.children[1].classList.add("shift-right");
+	// 	} else if (bracket.children.length === 3) {
+	// 		bracket.children[0].classList.add("shift-left");
+	// 		bracket.children[1].classList.add("shift-right");
+	// 		bracket.children[2].classList.add("shift-top");
+	// 	} else if (bracket.children.length === 4) {
+	// 		bracket.children[0].classList.add("shift-left");
+	// 		bracket.children[1].classList.add("shift-right");
+	// 		bracket.children[2].classList.add("shift-top");
+	// 		bracket.children[3].classList.add("shift-bottom");
+	// 	}
+	// }
 }
 
 //it moves the clicked player forward
 function moveForward(player, bracketId) {
 	let nextBracketId = getNextBracketId(bracketId, faceValue);
-	movePlayerToBracketId(player, nextBracketId);
+	setTimeout(function () {
+		movePlayerToBracketId(player, nextBracketId);
+		setTurn(players[currentTurn].next);
+	}, 150);
 }
 
 //it gets the id of the next bracket
 function getNextBracketId(bracketId, count) {
-	let currentBracketIdInt = String(
-		parseInt(bracketId.split("").reverse().join(""))
-	)
-		.split("")
-		.reverse()
-		.join("");
-	return `bracket${Number(currentBracketIdInt) + count}`;
+	let currentBracketIdArr = bracketId.split("");
+	let currentBracketIdNumArr = currentBracketIdArr.filter((ele) => {
+		if (Number(ele) === Number(ele)) {
+			return ele;
+		}
+	});
+	let currentBracketIdNum = Number(currentBracketIdNumArr.join(""));
+	return `bracket${currentBracketIdNum + count}`;
+}
+
+function checkEachBracket() {
+	let brackets = document.querySelectorAll(".bracket");
+
+	brackets.forEach((bracket) => {
+		if (bracket.children.length > 1) {
+			if (bracket.children.length === 2) {
+				bracket.children[0].classList.add("shift-left");
+				bracket.children[1].classList.add("shift-right");
+			} else if (bracket.children.length === 3) {
+				bracket.children[0].classList.add("shift-left");
+				bracket.children[1].classList.add("shift-right");
+				bracket.children[2].classList.add("shift-top");
+			} else if (bracket.children.length === 4) {
+				bracket.children[0].classList.add("shift-left");
+				bracket.children[1].classList.add("shift-right");
+				bracket.children[2].classList.add("shift-top");
+				bracket.children[3].classList.add("shift-bottom");
+			}
+		} else {
+			Array.from(bracket.children).forEach((child) => {
+				child.classList.remove("shift-left");
+				child.classList.remove("shift-right");
+				child.classList.remove("shift-top");
+				child.classList.remove("shift-bottom");
+			});
+		}
+	});
 }

@@ -111,6 +111,30 @@ li {
   color: white;
   display: grid;
   place-content: center;
+  position: relative;
+}
+
+.tracks .track .bracket .player {
+  position: absolute;
+  left: 12%;
+  top: 17%;
+  z-index: 5;
+}
+
+.tracks .track .bracket .player.shift-left {
+  left: -5%;
+}
+
+.tracks .track .bracket .player.shift-right {
+  left: 35%;
+}
+
+.tracks .track .bracket .player.shift-top {
+  top: -5%;
+}
+
+.tracks .track .bracket .player.shift-bottom {
+  top: 40%;
 }
 
 .tracks .track .bracket.safe-bracket {
@@ -120,12 +144,8 @@ li {
   position: relative;
 }
 
-.tracks .track .bracket.safe-bracket .player {
+.tracks .track .bracket.red-bracket .player, .tracks .track .bracket.green-bracket .player, .tracks .track .bracket.orange-bracket .player, .tracks .track .bracket.blue-bracket .player {
   border: 2px solid white;
-  position: absolute;
-  left: 12%;
-  top: 17%;
-  z-index: 5;
 }
 
 .tracks .track .bracket.red-bracket {
