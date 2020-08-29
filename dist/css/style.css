@@ -105,22 +105,6 @@ li {
   display: grid;
 }
 
-.tracks .track .bracket {
-  border-bottom: 1px solid white;
-  border-right: 1px solid white;
-  color: white;
-  display: grid;
-  place-content: center;
-  position: relative;
-}
-
-.tracks .track .bracket .player {
-  position: absolute;
-  left: 12%;
-  top: 17%;
-  z-index: 5;
-}
-
 .tracks .track .bracket .player.shift-left {
   left: -5%;
 }
@@ -135,33 +119,6 @@ li {
 
 .tracks .track .bracket .player.shift-bottom {
   top: 40%;
-}
-
-.tracks .track .bracket.safe-bracket {
-  font-size: 2.1rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  position: relative;
-}
-
-.tracks .track .bracket.red-bracket .player, .tracks .track .bracket.green-bracket .player, .tracks .track .bracket.orange-bracket .player, .tracks .track .bracket.blue-bracket .player {
-  border: 2px solid white;
-}
-
-.tracks .track .bracket.red-bracket {
-  background-color: #f23b3b;
-}
-
-.tracks .track .bracket.green-bracket {
-  background-color: #328b32;
-}
-
-.tracks .track .bracket.blue-bracket {
-  background-color: #7171bb;
-}
-
-.tracks .track .bracket.orange-bracket {
-  background-color: #34ea26;
 }
 
 .tracks.tracks-vertical {
@@ -228,9 +185,38 @@ li {
 }
 
 .home {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  position: relative;
+}
+
+.home .bracket {
+  height: 4.5rem;
+  width: 4.5rem;
+  position: absolute;
+  border: none;
+}
+
+.home .bracket#bracket61 {
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+
+.home .bracket#bracket62 {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.home .bracket#bracket63 {
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+}
+
+.home .bracket#bracket64 {
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .player {
@@ -290,7 +276,7 @@ li {
   height: 4.2rem;
   width: 4.2rem;
   border-radius: 5px;
-  position: relative;
+  position: absolute;
   cursor: pointer;
   color: white;
 }
@@ -395,4 +381,47 @@ li {
 
 .turn-tag.show {
   display: block;
+}
+
+.bracket {
+  border-bottom: 1px solid white;
+  border-right: 1px solid white;
+  color: white;
+  display: grid;
+  place-content: center;
+  position: relative;
+}
+
+.bracket .player {
+  position: absolute;
+  left: 12%;
+  top: 17%;
+  z-index: 5;
+}
+
+.bracket.safe-bracket {
+  font-size: 2.1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  position: relative;
+}
+
+.bracket.red-bracket .player, .bracket.green-bracket .player, .bracket.orange-bracket .player, .bracket.blue-bracket .player {
+  border: 2px solid white;
+}
+
+.bracket.red-bracket {
+  background-color: #f23b3b;
+}
+
+.bracket.green-bracket {
+  background-color: #328b32;
+}
+
+.bracket.blue-bracket {
+  background-color: #7171bb;
+}
+
+.bracket.orange-bracket {
+  background-color: #34ea26;
 }

@@ -1,5 +1,37 @@
 .home {
-	display: flex;
-	justify-content: center;
-	align-items: center;
+	// display: flex;
+	// justify-content: center;
+	// align-items: center;
+	position: relative;
+
+	.bracket {
+		height: 4.5rem;
+		width: 4.5rem;
+		position: absolute;
+		border: none;
+
+		&#bracket61 {
+			top: 50%;
+			left: 0;
+			transform: translateY(-50%);
+		}
+
+		&#bracket62 {
+			top: 0;
+			left: 50%;
+			transform: translateX(-50%);
+		}
+
+		&#bracket63 {
+			top: 50%;
+			right: 0;
+			transform: translateY(-50%);
+		}
+
+		&#bracket64 {
+			bottom: 0;
+			left: 50%;
+			transform: translateX(-50%);
+		}
+	}
 }

@@ -14,6 +14,8 @@ let players = {
 		next: "green",
 		homeStart: "bracket45",
 		homeEnd: "bracket48",
+		nextToFinish: "bracket1",
+		home: "bracket61",
 	},
 
 	green: {
@@ -22,6 +24,8 @@ let players = {
 		next: "orange",
 		homeStart: "bracket49",
 		homeEnd: "bracket52",
+		nextToFinish: "bracket12",
+		home: "bracket62",
 	},
 
 	orange: {
@@ -30,6 +34,8 @@ let players = {
 		next: "blue",
 		homeStart: "bracket53",
 		homeEnd: "bracket56",
+		nextToFinish: "bracket23",
+		home: "bracket63",
 	},
 
 	blue: {
@@ -38,6 +44,8 @@ let players = {
 		next: "red",
 		homeStart: "bracket57",
 		homeEnd: "bracket60",
+		nextToFinish: "bracket34",
+		home: "bracket64",
 	},
 };
 
@@ -47,6 +55,8 @@ let currentTurnPlayers;
 let faceValue;
 
 let currentBracketId;
+
+let currentGlowingPlayers = [];
 
 //this sets the basic properties of the board
 setBoard();
@@ -58,6 +68,8 @@ function setBoard() {
 	setTurn(currentTurn);
 
 	setTheDice();
+
+	//movePlayerToBracketId("blueplayer2", "bracket25");
 }
 
 //turn is given to whatever color is in currentTurn
@@ -126,6 +138,8 @@ function rollTheDice(currentTurn) {
 		}
 	);
 
+	currentGlowingPlayers = [];
+
 	showAnimation();
 
 	setTimeout(function () {
@@ -135,7 +149,7 @@ function rollTheDice(currentTurn) {
 
 		faceValue = document.getElementById(faceId).children.length;
 
-		if (faceValue !== 6) {
+		if (faceValue === 6) {
 			currentTurnPlayers.forEach((player) => {
 				glow(player);
 			});
@@ -146,6 +160,9 @@ function rollTheDice(currentTurn) {
 			if (currentOutsidePlayers.length > 0) {
 				Array.from(currentOutsidePlayers).forEach((player) => {
 					glow(player);
+					if (currentGlowingPlayers.length === 0) {
+						setTurn(players[currentTurn].next);
+					}
 				});
 			} else {
 				setTurn(players[currentTurn].next);
@@ -179,7 +196,16 @@ function hideAnimation() {
 
 //it makes the currentTurnPlayers glow
 function glow(player) {
-	player.classList.add("glow");
+	let playerBracketId = player.parentNode.id;
+	let playerBracketIdNum = getBracketIdNum(playerBracketId);
+	let playerHomeBracketIdNum = getBracketIdNum(
+		players[players[currentTurn].next].homeStart
+	);
+
+	if (playerBracketIdNum + faceValue <= playerHomeBracketIdNum) {
+		player.classList.add("glow");
+		currentGlowingPlayers.push(player);
+	}
 }
 
 //event listener for when the user clickes one of the glowing currentTurn players
@@ -206,8 +232,6 @@ function stopGlowing(players) {
 
 //it moves the clicked player to the bracket of the id
 function movePlayerToBracketId(player, nextBracketId) {
-	console.log(nextBracketId);
-
 	if (player.classList.contains("in-house-player")) {
 		player.classList.remove("in-house-player");
 		player.classList.add("outside-player");
@@ -226,32 +250,12 @@ function movePlayerToBracketId(player, nextBracketId) {
 	currentBracketId = bracket.id;
 
 	checkEachBracket();
-	// if (bracket.children.length > 1) {
-	// 	if (bracket.children.length === 2) {
-	// 		bracket.children[0].classList.add("shift-left");
-	// 		bracket.children[1].classList.add("shift-right");
-	// 	} else if (bracket.children.length === 3) {
-	// 		bracket.children[0].classList.add("shift-left");
-	// 		bracket.children[1].classList.add("shift-right");
-	// 		bracket.children[2].classList.add("shift-top");
-	// 	} else if (bracket.children.length === 4) {
-	// 		bracket.children[0].classList.add("shift-left");
-	// 		bracket.children[1].classList.add("shift-right");
-	// 		bracket.children[2].classList.add("shift-top");
-	// 		bracket.children[3].classList.add("shift-bottom");
-	// 	}
-	// }
 }
 
 //it moves the clicked player forward
 function moveForward(player) {
-	let currentBracketIdArr = currentBracketId.split("");
-	let currentBracketIdNumArr = currentBracketIdArr.filter((ele) => {
-		if (Number(ele) === Number(ele)) {
-			return ele;
-		}
-	});
-	let currentBracketIdNum = Number(currentBracketIdNumArr.join(""));
+	let currentBracketIdNum = getBracketIdNum(currentBracketId);
+	let home;
 
 	for (let i = 0; i < faceValue; i++) {
 		let nextBracketId;
@@ -264,10 +268,33 @@ function moveForward(player) {
 			break;
 		}
 
+		if (nextBracketId === `${players[currentTurn].nextToFinish}`) {
+			let homeStartBracketIdNum = getBracketIdNum(
+				players[currentTurn].homeStart
+			);
+			nextBracketId = `bracket${
+				homeStartBracketIdNum + (faceValue - i - 1)
+			}`;
+			movePlayerToBracketId(player, nextBracketId);
+			break;
+		}
+
+		if (
+			nextBracketId === `${players[players[currentTurn].next].homeStart}`
+		) {
+			nextBracketId = players[currentTurn].home;
+			movePlayerToBracketId(player, nextBracketId);
+			home = true;
+			document
+				.getElementById(`${player.id}`)
+				.classList.remove("outside-player");
+			break;
+		}
+
 		movePlayerToBracketId(player, nextBracketId);
 	}
 
-	if (faceValue !== 6) {
+	if (faceValue !== 6 && home !== true) {
 		setTurn(players[currentTurn].next);
 	}
 }
@@ -303,4 +330,14 @@ function checkEachBracket() {
 			});
 		}
 	});
+}
+
+function getBracketIdNum(bracketId) {
+	let currentBracketIdArr = bracketId.split("");
+	let currentBracketIdNumArr = currentBracketIdArr.filter((ele) => {
+		if (Number(ele) === Number(ele)) {
+			return ele;
+		}
+	});
+	return Number(currentBracketIdNumArr.join(""));
 }

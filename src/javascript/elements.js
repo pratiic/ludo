@@ -29,4 +29,9 @@ export let elements = {
 	orangePlayers: document.querySelectorAll(".orange-player"),
 	players: document.querySelectorAll(".player"),
 	inHousePlayers: document.querySelectorAll(".in-house-player"),
+
+	redHome: document.querySelector(".red-color-home"),
+	greenHome: document.querySelector(".green-color-home"),
+	orangeHome: document.querySelector(".orange-color-home"),
+	blueHome: document.querySelector(".blue-color-home"),
 };
