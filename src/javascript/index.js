@@ -1,16 +1,5 @@
 import { elements } from "./elements.js";
 
-let safeBrackets = [
-	"bracket2",
-	"bracket8",
-	"bracket13",
-	"bracket19",
-	"bracket24",
-	"bracket30",
-	"bracket35",
-	"bracket41",
-];
-
 let colors = {
 	red: "#f23b3b",
 	green: "#328b32",
@@ -23,24 +12,32 @@ let players = {
 		start: "bracket2",
 		finish: "bracket44",
 		next: "green",
+		homeStart: "bracket45",
+		homeEnd: "bracket48",
 	},
 
 	green: {
 		start: "bracket13",
 		finish: "bracket11",
 		next: "orange",
+		homeStart: "bracket49",
+		homeEnd: "bracket52",
 	},
 
 	orange: {
 		start: "bracket24",
 		finish: "bracket22",
 		next: "blue",
+		homeStart: "bracket53",
+		homeEnd: "bracket56",
 	},
 
 	blue: {
 		start: "bracket35",
 		finish: "bracket33",
 		next: "red",
+		homeStart: "bracket57",
+		homeEnd: "bracket60",
 	},
 };
 
@@ -48,6 +45,8 @@ let currentTurn;
 let currentTurnPlayers;
 
 let faceValue;
+
+let currentBracketId;
 
 //this sets the basic properties of the board
 setBoard();
@@ -144,7 +143,6 @@ function rollTheDice(currentTurn) {
 			let currentOutsidePlayers = document.querySelectorAll(
 				`.outside-player.${currentTurn}-player`
 			);
-			console.log(currentOutsidePlayers);
 			if (currentOutsidePlayers.length > 0) {
 				Array.from(currentOutsidePlayers).forEach((player) => {
 					glow(player);
@@ -189,10 +187,12 @@ elements.gameBoard.addEventListener("click", (event) => {
 	if (event.target.classList.contains("glow")) {
 		stopGlowing(document.querySelectorAll(".player"));
 
+		currentBracketId = event.target.parentNode.id;
+
 		if (event.target.classList.contains("in-house-player")) {
 			movePlayerToBracketId(event.target, players[currentTurn].start);
 		} else {
-			moveForward(event.target, event.target.parentNode.id);
+			moveForward(event.target, currentBracketId);
 		}
 	}
 });
@@ -206,6 +206,8 @@ function stopGlowing(players) {
 
 //it moves the clicked player to the bracket of the id
 function movePlayerToBracketId(player, nextBracketId) {
+	console.log(nextBracketId);
+
 	if (player.classList.contains("in-house-player")) {
 		player.classList.remove("in-house-player");
 		player.classList.add("outside-player");
@@ -216,9 +218,12 @@ function movePlayerToBracketId(player, nextBracketId) {
 
 	let bracket = document.getElementById(nextBracketId);
 
-	player.remove();
+	document.getElementById(playerId).remove();
+	//player.remove();
 
 	bracket.innerHTML += ` <div class="${playerClass}" id=${playerId}></div> `;
+
+	currentBracketId = bracket.id;
 
 	checkEachBracket();
 	// if (bracket.children.length > 1) {
@@ -239,24 +244,36 @@ function movePlayerToBracketId(player, nextBracketId) {
 }
 
 //it moves the clicked player forward
-function moveForward(player, bracketId) {
-	let nextBracketId = getNextBracketId(bracketId, faceValue);
-	setTimeout(function () {
-		movePlayerToBracketId(player, nextBracketId);
-		setTurn(players[currentTurn].next);
-	}, 150);
-}
-
-//it gets the id of the next bracket
-function getNextBracketId(bracketId, count) {
-	let currentBracketIdArr = bracketId.split("");
+function moveForward(player) {
+	let currentBracketIdArr = currentBracketId.split("");
 	let currentBracketIdNumArr = currentBracketIdArr.filter((ele) => {
 		if (Number(ele) === Number(ele)) {
 			return ele;
 		}
 	});
 	let currentBracketIdNum = Number(currentBracketIdNumArr.join(""));
-	return `bracket${currentBracketIdNum + count}`;
+
+	for (let i = 0; i < faceValue; i++) {
+		let nextBracketId;
+
+		nextBracketId = getNextBracketId(currentBracketIdNum + i);
+
+		if (nextBracketId === "bracket45" && currentTurn !== "red") {
+			nextBracketId = `bracket${faceValue - i}`;
+			movePlayerToBracketId(player, nextBracketId);
+			break;
+		}
+
+		movePlayerToBracketId(player, nextBracketId);
+	}
+
+	if (faceValue !== 6) {
+		setTurn(players[currentTurn].next);
+	}
+}
+
+function getNextBracketId(bracketId) {
+	return `bracket${bracketId + 1}`;
 }
 
 function checkEachBracket() {
