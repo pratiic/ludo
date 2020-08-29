@@ -249,7 +249,7 @@ function movePlayerToBracketId(player, nextBracketId) {
 
 	currentBracketId = bracket.id;
 
-	checkEachBracket();
+	checkEachBracket("overlap");
 }
 
 //it moves the clicked player forward
@@ -294,6 +294,8 @@ function moveForward(player) {
 		movePlayerToBracketId(player, nextBracketId);
 	}
 
+	checkEachBracket("cut");
+
 	if (faceValue !== 6 && home !== true) {
 		setTurn(players[currentTurn].next);
 	}
@@ -303,7 +305,7 @@ function getNextBracketId(bracketId) {
 	return `bracket${bracketId + 1}`;
 }
 
-function checkEachBracket() {
+function checkEachBracket(message) {
 	let brackets = document.querySelectorAll(".bracket");
 
 	brackets.forEach((bracket) => {
@@ -320,6 +322,12 @@ function checkEachBracket() {
 				bracket.children[1].classList.add("shift-right");
 				bracket.children[2].classList.add("shift-top");
 				bracket.children[3].classList.add("shift-bottom");
+			}
+
+			if (message === "cut") {
+				if (!bracket.classList.contains("safe-bracket")) {
+					cutPlayers(Array.from(bracket.children));
+				}
 			}
 		} else {
 			Array.from(bracket.children).forEach((child) => {
@@ -340,4 +348,40 @@ function getBracketIdNum(bracketId) {
 		}
 	});
 	return Number(currentBracketIdNumArr.join(""));
+}
+
+function cutPlayers(players) {
+	let cuttingPlayer = players[players.length - 1];
+	let cutPlayers = [];
+	for (let i = 0; i < players.length - 1; i++) {
+		if (!players[i].classList.contains(`${currentTurn}-player`)) {
+			cutPlayers.push(players[i]);
+		}
+	}
+
+	cutPlayers.forEach((player) => {
+		let colorHouse = document.querySelector(
+			`.color-house-${player.classList[1]}`
+		);
+		let colorHouseRooms = colorHouse.children;
+		let emptyHouseRooms = [];
+
+		Array.from(colorHouseRooms).forEach((room) => {
+			if (room.classList.contains("room") && room.children.length === 0) {
+				emptyHouseRooms.push(room);
+			}
+		});
+
+		console.log(player, emptyHouseRooms[0]);
+
+		sendPlayerToHouse(player, emptyHouseRooms[0]);
+	});
+}
+
+function sendPlayerToHouse(player, room) {
+	player.classList.remove("outside-player");
+	room.innerHTML += `<div class = "${String(
+		player.classList
+	)} in-house-player" id = "${player.id}"></div>`;
+	player.remove();
 }

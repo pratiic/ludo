@@ -158,19 +158,19 @@ li {
   position: relative;
 }
 
-.color-house-red {
+.color-house-red-player {
   background-color: #f23b3b;
 }
 
-.color-house-green {
+.color-house-green-player {
   background-color: #328b32;
 }
 
-.color-house-blue {
+.color-house-blue-player {
   background-color: #7171bb;
 }
 
-.color-house-orange {
+.color-house-orange-player {
   background-color: #34ea26;
 }
 
