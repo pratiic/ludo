@@ -294,7 +294,7 @@ function moveForward(player) {
 		movePlayerToBracketId(player, nextBracketId);
 	}
 
-	checkEachBracket("cut");
+	checkEachBracket();
 
 	if (faceValue !== 6 && home !== true) {
 		setTurn(players[currentTurn].next);
@@ -310,6 +310,13 @@ function checkEachBracket(message) {
 
 	brackets.forEach((bracket) => {
 		if (bracket.children.length > 1) {
+			if (!message) {
+				if (!bracket.classList.contains("safe-bracket")) {
+					cutPlayers(Array.from(bracket.children));
+					//checkEachBracket();
+				}
+			}
+
 			if (bracket.children.length === 2) {
 				bracket.children[0].classList.add("shift-left");
 				bracket.children[1].classList.add("shift-right");
@@ -324,11 +331,12 @@ function checkEachBracket(message) {
 				bracket.children[3].classList.add("shift-bottom");
 			}
 
-			if (message === "cut") {
-				if (!bracket.classList.contains("safe-bracket")) {
-					cutPlayers(Array.from(bracket.children));
-				}
-			}
+			// if (message === "cut") {
+			// 	if (!bracket.classList.contains("safe-bracket")) {
+			// 		cutPlayers(Array.from(bracket.children));
+			// 		checkEachBracket();
+			// 	}
+			// }
 		} else {
 			Array.from(bracket.children).forEach((child) => {
 				child.classList.remove("shift-left");
@@ -354,8 +362,10 @@ function cutPlayers(players) {
 	let cuttingPlayer = players[players.length - 1];
 	let cutPlayers = [];
 	for (let i = 0; i < players.length - 1; i++) {
-		if (!players[i].classList.contains(`${currentTurn}-player`)) {
+		console.log(players[i]);
+		if (!players[i].classList.contains(`${cuttingPlayer.classList[1]}`)) {
 			cutPlayers.push(players[i]);
+			console.log(cutPlayers);
 		}
 	}
 
@@ -372,13 +382,35 @@ function cutPlayers(players) {
 			}
 		});
 
-		console.log(player, emptyHouseRooms[0]);
-
 		sendPlayerToHouse(player, emptyHouseRooms[0]);
+
+		checkEachBracket("overlap");
 	});
 }
 
 function sendPlayerToHouse(player, room) {
+	// let playerProperties = player.getBoundingClientRect();
+
+	// let roomProperties = room.getBoundingClientRect();
+
+	// let roomX = parseInt(roomProperties.left);
+	// let roomY = parseInt(roomProperties.top);
+	// let roomHeight = parseInt(roomProperties.height);
+	// let roomWidth = parseInt(roomProperties.width);
+
+	// let playerHeight = parseInt(playerProperties.height);
+	// let playerWidth = parseInt(playerProperties.width);
+
+	// player.style.top = `${
+	// 	roomY + parseInt(roomWidth / 2) - parseInt(playerHeight / 2)
+	// }px`;
+	// player.style.left = `${
+	// 	roomX + parseInt(roomHeight / 2) - parseInt(playerWidth / 2)
+	// }px`;
+
+	// player.style.top = `${roomY}px`;
+	// player.style.left = `${roomX}px`;
+
 	player.classList.remove("outside-player");
 	room.innerHTML += `<div class = "${String(
 		player.classList
