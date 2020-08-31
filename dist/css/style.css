@@ -208,19 +208,19 @@ li {
   border: none;
 }
 
-.home .bracket#bracket61 {
+.home .bracket#bracket49 {
   top: 50%;
   left: 0;
   transform: translateY(-50%);
 }
 
-.home .bracket#bracket62 {
+.home .bracket#bracket54 {
   top: 0;
   left: 50%;
   transform: translateX(-50%);
 }
 
-.home .bracket#bracket63 {
+.home .bracket#bracket59 {
   top: 50%;
   right: 0;
   transform: translateY(-50%);

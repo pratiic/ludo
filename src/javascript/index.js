@@ -15,35 +15,35 @@ let players = {
 		homeStart: "bracket45",
 		homeEnd: "bracket48",
 		nextToFinish: "bracket1",
-		home: "bracket61",
+		home: "bracket49",
 	},
 
 	green: {
 		start: "bracket13",
 		finish: "bracket11",
 		next: "orange",
-		homeStart: "bracket49",
-		homeEnd: "bracket52",
+		homeStart: "bracket50",
+		homeEnd: "bracket53",
 		nextToFinish: "bracket12",
-		home: "bracket62",
+		home: "bracket54",
 	},
 
 	orange: {
 		start: "bracket24",
 		finish: "bracket22",
 		next: "blue",
-		homeStart: "bracket53",
-		homeEnd: "bracket56",
+		homeStart: "bracket55",
+		homeEnd: "bracket58",
 		nextToFinish: "bracket23",
-		home: "bracket63",
+		home: "bracket59",
 	},
 
 	blue: {
 		start: "bracket35",
 		finish: "bracket33",
 		next: "red",
-		homeStart: "bracket57",
-		homeEnd: "bracket60",
+		homeStart: "bracket60",
+		homeEnd: "bracket63",
 		nextToFinish: "bracket34",
 		home: "bracket64",
 	},
@@ -108,8 +108,9 @@ elements.brackets.forEach((bracket) => {
 //event listener to listen for clicking of the dice
 elements.dice.addEventListener("click", (event) => {
 	if (
-		event.target.classList.contains("face") ||
-		event.target.classList.contains("point")
+		(event.target.classList.contains("face") ||
+			event.target.classList.contains("point")) &&
+		currentGlowingPlayers.length === 0
 	) {
 		rollTheDice(currentTurn);
 	}
@@ -144,8 +145,6 @@ function rollTheDice(currentTurn) {
 		}
 	);
 
-	currentGlowingPlayers = [];
-
 	showAnimation();
 
 	setTimeout(function () {
@@ -160,7 +159,6 @@ function rollTheDice(currentTurn) {
 				glow(player);
 			});
 		} else {
-			console.log(faceValue);
 			let currentOutsidePlayers = document.querySelectorAll(
 				`.outside-player.${currentTurn}-player`
 			);
@@ -205,9 +203,7 @@ function hideAnimation() {
 function glow(player) {
 	let playerBracketId = player.parentNode.id;
 	let playerBracketIdNum = getBracketIdNum(playerBracketId);
-	let playerHomeBracketIdNum = getBracketIdNum(
-		players[players[currentTurn].next].homeStart
-	);
+	let playerHomeBracketIdNum = getBracketIdNum(players[currentTurn].home);
 
 	if (playerBracketIdNum + faceValue <= playerHomeBracketIdNum) {
 		player.classList.add("glow");
@@ -235,6 +231,8 @@ function stopGlowing(players) {
 	players.forEach((player) => {
 		player.classList.remove("glow");
 	});
+
+	currentGlowingPlayers = [];
 }
 
 //it moves the clicked player to the bracket of the id
@@ -289,9 +287,7 @@ function moveForward(player) {
 			break;
 		}
 
-		if (
-			nextBracketId === `${players[players[currentTurn].next].homeStart}`
-		) {
+		if (nextBracketId === `${players[currentTurn].home}`) {
 			nextBracketId = players[currentTurn].home;
 			movePlayerToBracketId(player, nextBracketId);
 			home = true;
