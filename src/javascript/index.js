@@ -58,6 +58,9 @@ let currentBracketId;
 
 let currentGlowingPlayers = [];
 
+let home;
+let cut;
+
 //this sets the basic properties of the board
 setBoard();
 
@@ -130,6 +133,9 @@ function rollTheDice(currentTurn) {
 	let faceId = generateRandomFaceId();
 	currentTurnPlayers = document.querySelectorAll(`.${currentTurn}-player`);
 
+	home = false;
+	cut = false;
+
 	let currentInHousePlayers = Array.from(currentTurnPlayers).filter(
 		(player) => {
 			if (player.classList.contains(`${currentTurn}-player`)) {
@@ -154,6 +160,7 @@ function rollTheDice(currentTurn) {
 				glow(player);
 			});
 		} else {
+			console.log(faceValue);
 			let currentOutsidePlayers = document.querySelectorAll(
 				`.outside-player.${currentTurn}-player`
 			);
@@ -250,12 +257,15 @@ function movePlayerToBracketId(player, nextBracketId) {
 	currentBracketId = bracket.id;
 
 	checkEachBracket("overlap");
+
+	// if (faceValue !== 6 && home !== true && cut !== true) {
+	// 	setTurn(players[currentTurn].next);
+	// }
 }
 
 //it moves the clicked player forward
 function moveForward(player) {
 	let currentBracketIdNum = getBracketIdNum(currentBracketId);
-	let home;
 
 	for (let i = 0; i < faceValue; i++) {
 		let nextBracketId;
@@ -285,6 +295,17 @@ function moveForward(player) {
 			nextBracketId = players[currentTurn].home;
 			movePlayerToBracketId(player, nextBracketId);
 			home = true;
+
+			console.log(player);
+
+			let homePlayer = document.getElementById(player.id);
+
+			homePlayer.classList.add("home");
+
+			setTimeout(function () {
+				homePlayer.classList.remove("home");
+			}, 1500);
+
 			document
 				.getElementById(`${player.id}`)
 				.classList.remove("outside-player");
@@ -330,13 +351,6 @@ function checkEachBracket(message) {
 				bracket.children[2].classList.add("shift-top");
 				bracket.children[3].classList.add("shift-bottom");
 			}
-
-			// if (message === "cut") {
-			// 	if (!bracket.classList.contains("safe-bracket")) {
-			// 		cutPlayers(Array.from(bracket.children));
-			// 		checkEachBracket();
-			// 	}
-			// }
 		} else {
 			Array.from(bracket.children).forEach((child) => {
 				child.classList.remove("shift-left");
@@ -362,10 +376,8 @@ function cutPlayers(players) {
 	let cuttingPlayer = players[players.length - 1];
 	let cutPlayers = [];
 	for (let i = 0; i < players.length - 1; i++) {
-		console.log(players[i]);
 		if (!players[i].classList.contains(`${cuttingPlayer.classList[1]}`)) {
 			cutPlayers.push(players[i]);
-			console.log(cutPlayers);
 		}
 	}
 
@@ -382,9 +394,19 @@ function cutPlayers(players) {
 			}
 		});
 
-		sendPlayerToHouse(player, emptyHouseRooms[0]);
+		let room = emptyHouseRooms[0];
 
-		checkEachBracket("overlap");
+		room.parentNode.classList.add("cut");
+
+		setTimeout(function () {
+			sendPlayerToHouse(player, room);
+			checkEachBracket("overlap");
+			cut = true;
+		}, 700);
+
+		setTimeout(function () {
+			room.parentNode.classList.remove("cut");
+		}, 1500);
 	});
 }
 

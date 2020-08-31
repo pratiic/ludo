@@ -28,4 +28,18 @@
 		justify-content: center;
 		align-items: center;
 	}
+
+	&.cut {
+		animation: playerCutAnimation 300ms ease-in 5;
+	}
+}
+
+@keyframes playerCutAnimation {
+	0% {
+		background-color: black;
+	}
+
+	100% {
+		background-color: $color-background;
+	}
 }
