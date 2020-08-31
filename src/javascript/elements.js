@@ -34,4 +34,10 @@ export let elements = {
 	greenHome: document.querySelector(".green-color-home"),
 	orangeHome: document.querySelector(".orange-color-home"),
 	blueHome: document.querySelector(".blue-color-home"),
+
+	gameOverModal: document.querySelector(".gameover-modal"),
+	gameOverModalBody: document.querySelector(".gameover-modal-body"),
+
+	resetButton: document.querySelector(".reset-button"),
+	keepPlayingButton: document.querySelector(".keep-playing-button"),
 };

@@ -12,42 +12,56 @@ let players = {
 		start: "bracket2",
 		finish: "bracket44",
 		next: "green",
+		previous: "blue",
 		homeStart: "bracket45",
 		homeEnd: "bracket48",
 		nextToFinish: "bracket1",
 		home: "bracket49",
+		homePlayers: [],
+		finishedAllPlayers: false,
 	},
 
 	green: {
 		start: "bracket13",
 		finish: "bracket11",
 		next: "orange",
+		previous: "red",
 		homeStart: "bracket50",
 		homeEnd: "bracket53",
 		nextToFinish: "bracket12",
 		home: "bracket54",
+		homePlayers: [],
+		finishedAllPlayers: false,
 	},
 
 	orange: {
 		start: "bracket24",
 		finish: "bracket22",
 		next: "blue",
+		previous: "green",
 		homeStart: "bracket55",
 		homeEnd: "bracket58",
 		nextToFinish: "bracket23",
 		home: "bracket59",
+		homePlayers: [],
+		finishedAllPlayers: false,
 	},
 
 	blue: {
 		start: "bracket35",
 		finish: "bracket33",
 		next: "red",
+		previous: "orange",
 		homeStart: "bracket60",
 		homeEnd: "bracket63",
 		nextToFinish: "bracket34",
 		home: "bracket64",
+		homePlayers: [],
+		finishedAllPlayers: false,
 	},
 };
+
+let gamePlayingColors = ["red", "green", "orange", "blue"];
 
 let currentTurn;
 let currentTurnPlayers;
@@ -60,6 +74,11 @@ let currentGlowingPlayers = [];
 
 let home;
 let cut;
+
+let winner;
+let secondPlace;
+let thirdPlace;
+let fourthPlace;
 
 //this sets the basic properties of the board
 setBoard();
@@ -77,17 +96,21 @@ function setBoard() {
 
 //turn is given to whatever color is in currentTurn
 function setTurn(turn) {
-	currentTurn = turn;
+	if (players[turn].finishedAllPlayers === false) {
+		currentTurn = turn;
 
-	elements.turnTags.forEach((tag) => {
-		if (tag.classList.contains(`${turn}-turn-tag`)) {
-			tag.classList.add("show");
-		} else {
-			tag.classList.remove("show");
-		}
-	});
+		elements.turnTags.forEach((tag) => {
+			if (tag.classList.contains(`${turn}-turn-tag`)) {
+				tag.classList.add("show");
+			} else {
+				tag.classList.remove("show");
+			}
+		});
 
-	setDiceColor(currentTurn);
+		setDiceColor(currentTurn);
+	} else {
+		setTurn(players[turn].next);
+	}
 }
 
 //it sets the color of the dice of that of the currentTurn
@@ -292,11 +315,18 @@ function moveForward(player) {
 			movePlayerToBracketId(player, nextBracketId);
 			home = true;
 
-			console.log(player);
-
 			let homePlayer = document.getElementById(player.id);
 
+			players[currentTurn].homePlayers = [
+				...players[currentTurn].homePlayers,
+				homePlayer,
+			];
+
 			homePlayer.classList.add("home");
+
+			if (players[currentTurn].homePlayers.length === 1) {
+				showGameOverModal();
+			}
 
 			setTimeout(function () {
 				homePlayer.classList.remove("home");
@@ -434,4 +464,65 @@ function sendPlayerToHouse(player, room) {
 		player.classList
 	)} in-house-player" id = "${player.id}"></div>`;
 	player.remove();
+}
+
+function showGameOverModal() {
+	console.log("pratiic");
+
+	if (!winner) {
+		elements.gameOverModalBody.querySelector(
+			".message"
+		).innerHTML += `<p class = "message-winner">winner: <span class = "${currentTurn}">${currentTurn}</span></p>`;
+
+		winner = currentTurn;
+
+		players[currentTurn].finishedAllPlayers = true;
+
+		console.log(currentTurn);
+	} else if (!secondPlace) {
+		elements.gameOverModalBody.querySelector(
+			".message"
+		).innerHTML += `<p class = "message-secondPlace">second place: <span class = "${currentTurn}">${currentTurn}</span></p>`;
+
+		secondPlace = currentTurn;
+
+		players[currentTurn].finishedAllPlayers = true;
+	} else if (!thirdPlace) {
+		elements.gameOverModalBody.querySelector(
+			".message"
+		).innerHTML += `<p class = "message-thirdPlace">third place: <span class = "${currentTurn}">${currentTurn}</span></p>`;
+
+		thirdPlace = currentTurn;
+
+		players[currentTurn].finishedAllPlayers = true;
+	}
+
+	if (winner && secondPlace && thirdPlace) {
+		elements.gameOverModalBody.querySelector(
+			".message"
+		).innerHTML += `<p class = "message-fourthPlace">fourth place: <span class = "${getLastPlayer()}">${getLastPlayer()}</span></p>`;
+
+		elements.keepPlayingButton.remove();
+	}
+
+	setTimeout(function () {
+		elements.gameOverModal.classList.add("show");
+	}, 1300);
+}
+
+elements.resetButton.addEventListener("click", () => {
+	location.reload();
+});
+
+elements.keepPlayingButton.addEventListener("click", () => {
+	elements.gameOverModal.classList.remove("show");
+	setTurn(players[currentTurn].next);
+});
+
+function getLastPlayer() {
+	for (let i = 0; i < gamePlayingColors.length; i++) {
+		if (players[gamePlayingColors[i]].finishedAllPlayers === false) {
+			return gamePlayingColors[i];
+		}
+	}
 }
