@@ -100,7 +100,10 @@ function setTurn(turn) {
 		currentTurn = turn;
 
 		elements.turnTags.forEach((tag) => {
-			if (tag.classList.contains(`${turn}-turn-tag`)) {
+			if (
+				tag.classList.contains(`${turn}-turn-tag`) ||
+				tag.classList.contains("finished")
+			) {
 				tag.classList.add("show");
 			} else {
 				tag.classList.remove("show");
@@ -177,7 +180,7 @@ function rollTheDice(currentTurn) {
 
 		faceValue = document.getElementById(faceId).children.length;
 
-		if (faceValue === 6) {
+		if (faceValue !== 6) {
 			currentTurnPlayers.forEach((player) => {
 				glow(player);
 			});
@@ -189,11 +192,11 @@ function rollTheDice(currentTurn) {
 				Array.from(currentOutsidePlayers).forEach((player) => {
 					glow(player);
 					if (currentGlowingPlayers.length === 0) {
-						setTurn(players[currentTurn].next);
+						//setTurn(players[currentTurn].next);
 					}
 				});
 			} else {
-				setTurn(players[currentTurn].next);
+				//setTurn(players[currentTurn].next);
 			}
 		}
 	}, 900);
@@ -344,7 +347,7 @@ function moveForward(player) {
 	checkEachBracket();
 
 	if (faceValue !== 6 && home !== true) {
-		setTurn(players[currentTurn].next);
+		//setTurn(players[currentTurn].next);
 	}
 }
 
@@ -467,7 +470,9 @@ function sendPlayerToHouse(player, room) {
 }
 
 function showGameOverModal() {
-	console.log("pratiic");
+	let finishingPlayerTurnTag = document.querySelector(
+		`.${currentTurn}-turn-tag`
+	);
 
 	if (!winner) {
 		elements.gameOverModalBody.querySelector(
@@ -476,15 +481,17 @@ function showGameOverModal() {
 
 		winner = currentTurn;
 
-		players[currentTurn].finishedAllPlayers = true;
+		changeTurnTag(finishingPlayerTurnTag, "winner");
 
-		console.log(currentTurn);
+		players[currentTurn].finishedAllPlayers = true;
 	} else if (!secondPlace) {
 		elements.gameOverModalBody.querySelector(
 			".message"
 		).innerHTML += `<p class = "message-secondPlace">second place: <span class = "${currentTurn}">${currentTurn}</span></p>`;
 
 		secondPlace = currentTurn;
+
+		changeTurnTag(finishingPlayerTurnTag, "second place");
 
 		players[currentTurn].finishedAllPlayers = true;
 	} else if (!thirdPlace) {
@@ -494,6 +501,8 @@ function showGameOverModal() {
 
 		thirdPlace = currentTurn;
 
+		changeTurnTag(finishingPlayerTurnTag, "third place");
+
 		players[currentTurn].finishedAllPlayers = true;
 	}
 
@@ -501,6 +510,8 @@ function showGameOverModal() {
 		elements.gameOverModalBody.querySelector(
 			".message"
 		).innerHTML += `<p class = "message-fourthPlace">fourth place: <span class = "${getLastPlayer()}">${getLastPlayer()}</span></p>`;
+
+		changeTurnTag(finishingPlayerTurnTag, "fourth place");
 
 		elements.keepPlayingButton.remove();
 	}
@@ -525,4 +536,10 @@ function getLastPlayer() {
 			return gamePlayingColors[i];
 		}
 	}
+}
+
+function changeTurnTag(tag, message) {
+	tag.innerText = message;
+	tag.classList.add("show");
+	tag.classList.add("finished");
 }
