@@ -1,0 +1,158 @@
+.begin-game-modal-container {
+	position: absolute;
+	left: 0;
+	top: 0;
+	height: 100%;
+	width: 100%;
+	background-color: rgba(0, 0, 0, 0.95);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	&.hide {
+		display: none;
+	}
+}
+
+.begin-game-modal {
+	background-color: white;
+	border-radius: 7px;
+	box-shadow: 0 0 9rem 0 rgba(0, 0, 0, 0.5);
+	position: relative;
+	height: 28rem;
+	width: 35rem;
+	z-index: 5;
+}
+
+.players-select,
+.players-info {
+	position: absolute;
+	left: 0;
+	top: 0;
+	height: 100%;
+	width: 100%;
+	padding: 1.5rem;
+}
+
+.players-select {
+	display: block;
+
+	h2 {
+		text-align: center;
+		margin-bottom: 2rem;
+		font-size: 2.5rem;
+	}
+
+	.players-options {
+		display: flex;
+		justify-content: space-around;
+		align-items: center;
+		padding: 0.7rem;
+		margin-bottom: 2.5rem;
+	}
+
+	.player-option {
+		font-size: 2.2rem;
+		background-color: $color-background;
+		padding: 0.5rem 1.3rem;
+		border-radius: 5px;
+		color: white;
+		cursor: pointer;
+		font-weight: 700;
+
+		&.selected {
+			background-color: $primary-blue;
+		}
+	}
+
+	&.hide {
+		display: none;
+	}
+}
+
+.players-info {
+	display: none;
+	padding: 2.5rem 0;
+
+	.user-row {
+		display: flex;
+		justify-content: center;
+		align-items: start;
+
+		input {
+			height: 3rem;
+			border-radius: 5px;
+			outline: none;
+			border: 2px solid $color-background;
+			margin-bottom: 1.3rem;
+			font-size: 1.7rem;
+			padding: 0.7rem 2rem;
+			font-weight: 700;
+			width: 25rem;
+
+			// &.user {
+			// 	&-red {
+			// 		color: $color-red;
+			// 	}
+			// 	&-green {
+			// 		color: $color-green;
+			// 	}
+			// 	&-orange {
+			// 		color: $color-orange;
+			// 	}
+			// 	&-blue {
+			// 		color: $color-blue;
+			// 	}
+			// }
+		}
+
+		.user-color {
+			height: 3rem;
+			width: 3rem;
+			margin-left: 1.5rem;
+			border-radius: 3px;
+
+			&-red {
+				background-color: $color-red;
+			}
+
+			&-green {
+				background-color: $color-green;
+			}
+
+			&-orange {
+				background-color: $color-orange;
+			}
+
+			&-blue {
+				background-color: $color-blue;
+			}
+		}
+
+		&.hide {
+			display: none;
+		}
+	}
+
+	&.show {
+		display: block;
+	}
+}
+
+.modal-button {
+	border: none;
+	outline: none;
+	background-color: $primary-blue;
+	color: white;
+	border-radius: 5px;
+	padding: 0.5rem 1.3rem;
+	font-size: 1.8rem;
+	display: block;
+	margin: auto;
+	cursor: pointer;
+	text-transform: uppercase;
+
+	&.play-button {
+		margin-top: 1.3rem;
+	}
+}

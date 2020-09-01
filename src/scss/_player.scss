@@ -42,6 +42,10 @@
 	&.home {
 		animation: homeAnimation 300ms ease-in 5;
 	}
+
+	&.hide {
+		display: none;
+	}
 }
 
 @keyframes glowingAnimation {

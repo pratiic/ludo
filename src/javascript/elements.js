@@ -1,4 +1,16 @@
 export let elements = {
+	beginGameModal: document.querySelector(".begin-game-modal"),
+	beginGameModalContainer: document.querySelector(
+		".begin-game-modal-container"
+	),
+	playersOptions: document.querySelector(".players-options"),
+	playerOptions: document.querySelectorAll(".player-option"),
+	playersSelect: document.querySelector(".players-select"),
+	nextButton: document.querySelector(".next-button"),
+	playersInfo: document.querySelector(".players-info"),
+	players: document.querySelector(".players"),
+	playButton: document.querySelector(".play-button"),
+
 	gameBoard: document.querySelector(".game-board"),
 
 	colorHouses: document.querySelectorAll(".color-house"),
@@ -23,6 +35,8 @@ export let elements = {
 
 	turnTags: document.querySelectorAll(".turn-tag"),
 
+	nameTags: document.querySelectorAll(".name-tag"),
+
 	redPlayers: document.querySelectorAll(".red-player"),
 	greenPlayers: document.querySelectorAll(".green-player"),
 	bluePlayers: document.querySelectorAll(".blue-player"),
@@ -40,4 +54,6 @@ export let elements = {
 
 	resetButton: document.querySelector(".reset-button"),
 	keepPlayingButton: document.querySelector(".keep-playing-button"),
+
+	beginGameModal: document.querySelector(".begin-game-modal"),
 };

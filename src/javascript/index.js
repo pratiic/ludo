@@ -19,6 +19,7 @@ let players = {
 		home: "bracket49",
 		homePlayers: [],
 		finishedAllPlayers: false,
+		is: false,
 	},
 
 	green: {
@@ -32,6 +33,7 @@ let players = {
 		home: "bracket54",
 		homePlayers: [],
 		finishedAllPlayers: false,
+		is: false,
 	},
 
 	orange: {
@@ -45,6 +47,7 @@ let players = {
 		home: "bracket59",
 		homePlayers: [],
 		finishedAllPlayers: false,
+		is: false,
 	},
 
 	blue: {
@@ -58,6 +61,7 @@ let players = {
 		home: "bracket64",
 		homePlayers: [],
 		finishedAllPlayers: false,
+		is: false,
 	},
 };
 
@@ -80,10 +84,102 @@ let secondPlace;
 let thirdPlace;
 let fourthPlace;
 
-//this sets the basic properties of the board
-setBoard();
+let numberOfPlayers;
+
+let redPlayerName;
+let greenPlayerName;
+let orangePlayerName;
+let bluePlayerName;
+
+elements.playersOptions.addEventListener("click", (event) => {
+	if (event.target.classList.contains("player-option")) {
+		event.target.classList.add("selected");
+
+		numberOfPlayers = Number(event.target.innerText);
+
+		unSelectOthers(event.target);
+	}
+});
+
+function unSelectOthers(selected) {
+	elements.playerOptions.forEach((option) => {
+		if (!(option === selected)) {
+			option.classList.remove("selected");
+		}
+	});
+}
+
+elements.nextButton.addEventListener("click", () => {
+	if (numberOfPlayers) {
+		showPlayersInfo();
+		hidePlayersSelect();
+	}
+});
+
+function showPlayersInfo() {
+	elements.playersInfo.classList.add("show");
+
+	let userRows = Array.from(elements.playersInfo.children);
+
+	for (let i = numberOfPlayers; i < 4; i++) {
+		userRows[i].classList.add("hide");
+	}
+}
+
+function hidePlayersSelect() {
+	elements.playersSelect.classList.add("hide");
+}
+
+elements.playButton.addEventListener("click", () => {
+	document.querySelector(".begin-game-modal-container").classList.add("hide");
+
+	//this sets the basic properties of the board
+	setBoard();
+});
 
 function setBoard() {
+	for (let i = 0; i < numberOfPlayers; i++) {
+		players[gamePlayingColors[i]].is = true;
+	}
+
+	gamePlayingColors.forEach((color) => {
+		if (!players[color].is) {
+			Array.from(
+				document.querySelector(`.color-house-${color}-player`).children
+			).forEach((child) => {
+				if (child.classList.contains("room")) {
+					child.children[0].classList.add("hide");
+				}
+				if (child.classList.contains("name-tag")) {
+					child.remove();
+				}
+			});
+		}
+	});
+
+	redPlayerName = document.querySelector(".user-red").value;
+	greenPlayerName = document.querySelector(".user-green").value;
+	orangePlayerName = document.querySelector(".user-orange").value;
+	bluePlayerName = document.querySelector(".user-blue").value;
+
+	elements.nameTags.forEach((tag) => {
+		if (tag.classList.contains("red-name-tag")) {
+			tag.innerText = redPlayerName;
+		}
+
+		if (tag.classList.contains("green-name-tag")) {
+			tag.innerText = greenPlayerName;
+		}
+
+		if (tag.classList.contains("orange-name-tag")) {
+			tag.innerText = orangePlayerName;
+		}
+
+		if (tag.classList.contains("blue-name-tag")) {
+			tag.innerText = bluePlayerName;
+		}
+	});
+
 	//the game starts from red
 	currentTurn = "red";
 
@@ -94,9 +190,11 @@ function setBoard() {
 	//movePlayerToBracketId("blueplayer2", "bracket25");
 }
 
+console.log(elements.nameTags);
+
 //turn is given to whatever color is in currentTurn
 function setTurn(turn) {
-	if (players[turn].finishedAllPlayers === false) {
+	if (players[turn].finishedAllPlayers === false && players[turn].is) {
 		currentTurn = turn;
 
 		elements.turnTags.forEach((tag) => {
@@ -180,7 +278,7 @@ function rollTheDice(currentTurn) {
 
 		faceValue = document.getElementById(faceId).children.length;
 
-		if (faceValue !== 6) {
+		if (faceValue === 6) {
 			currentTurnPlayers.forEach((player) => {
 				glow(player);
 			});
@@ -192,11 +290,11 @@ function rollTheDice(currentTurn) {
 				Array.from(currentOutsidePlayers).forEach((player) => {
 					glow(player);
 					if (currentGlowingPlayers.length === 0) {
-						//setTurn(players[currentTurn].next);
+						setTurn(players[currentTurn].next);
 					}
 				});
 			} else {
-				//setTurn(players[currentTurn].next);
+				setTurn(players[currentTurn].next);
 			}
 		}
 	}, 900);
@@ -327,7 +425,7 @@ function moveForward(player) {
 
 			homePlayer.classList.add("home");
 
-			if (players[currentTurn].homePlayers.length === 1) {
+			if (players[currentTurn].homePlayers.length === 4) {
 				showGameOverModal();
 			}
 
@@ -347,7 +445,7 @@ function moveForward(player) {
 	checkEachBracket();
 
 	if (faceValue !== 6 && home !== true) {
-		//setTurn(players[currentTurn].next);
+		setTurn(players[currentTurn].next);
 	}
 }
 
