@@ -568,13 +568,10 @@ function cutPlayers(players) {
 		cut = true;
 
 		setTimeout(function () {
-			sendPlayerToHouse(player, room);
-			checkEachBracket("overlap");
-		}, 700);
-
-		setTimeout(function () {
 			room.parentNode.classList.remove("cut");
 			player.classList.remove("cut");
+			sendPlayerToHouse(player, room);
+			checkEachBracket("overlap");
 		}, 1500);
 	});
 }
