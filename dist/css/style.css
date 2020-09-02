@@ -10,6 +10,18 @@ html {
   font-size: 62.5%;
 }
 
+@media screen and (min-width: 1900px) {
+  html {
+    font-size: 78%;
+  }
+}
+
+@media screen and (min-width: 1500px) {
+  html {
+    font-size: 69%;
+  }
+}
+
 @media screen and (max-width: 750px) {
   html {
     font-size: 58.5%;
