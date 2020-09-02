@@ -32,14 +32,8 @@
 	&.cut {
 		animation: playerCutAnimation 300ms ease-in 5;
 	}
-}
 
-@keyframes playerCutAnimation {
-	0% {
-		background-color: black;
-	}
-
-	100% {
-		background-color: $color-background;
+	&.home {
+		animation: homeAnimation 300ms ease-in 5;
 	}
 }

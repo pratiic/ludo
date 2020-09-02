@@ -22,6 +22,13 @@
 	// height: 28rem;
 	// width: 35rem;
 	z-index: 5;
+
+	@media screen and (max-width: 500px) {
+		button {
+			padding: 0.95rem 2rem;
+			font-size: 1.95rem;
+		}
+	}
 }
 
 .players-select,
@@ -168,6 +175,17 @@
 
 		&.hide {
 			display: none;
+		}
+
+		@media screen and (max-width: 500px) {
+			input {
+				height: 3.8rem;
+			}
+
+			.user-color {
+				height: 4rem;
+				width: 4rem;
+			}
 		}
 	}
 

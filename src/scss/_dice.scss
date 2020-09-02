@@ -76,16 +76,24 @@
 			z-index: -1;
 		}
 	}
-}
 
-@keyframes diceRollAnimation {
-	0% {
-		transform: scale(1);
-		color: transparent;
+	@media screen and (max-width: 700px) {
+		height: 4.4rem;
+		width: 4.4rem;
 	}
 
-	100% {
-		transform: scale(0);
-		color: transparent;
+	@media screen and (max-width: 600px) {
+		height: 4.75rem;
+		width: 4.75rem;
+	}
+
+	@media screen and (max-width: 500px) {
+		height: 4.95rem;
+		width: 4.95rem;
+	}
+
+	@media screen and (max-width: 400px) {
+		height: 5rem;
+		width: 5rem;
 	}
 }

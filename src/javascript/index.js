@@ -453,12 +453,19 @@ function moveForward(player) {
 
 			homePlayer.classList.add("home");
 
+			let homePlayerColorHouse = document.querySelector(
+				`.color-house-${currentTurn}-player`
+			);
+
+			homePlayerColorHouse.classList.add("home");
+
 			if (players[currentTurn].homePlayers.length === 4) {
 				showGameOverModal();
 			}
 
 			setTimeout(function () {
 				homePlayer.classList.remove("home");
+				homePlayerColorHouse.classList.remove("home");
 			}, 1500);
 
 			document
@@ -553,6 +560,8 @@ function cutPlayers(players) {
 
 		room.parentNode.classList.add("cut");
 
+		player.classList.add("cut");
+
 		setTimeout(function () {
 			sendPlayerToHouse(player, room);
 			checkEachBracket("overlap");
@@ -561,6 +570,7 @@ function cutPlayers(players) {
 
 		setTimeout(function () {
 			room.parentNode.classList.remove("cut");
+			player.classList.remove("cut");
 		}, 1500);
 	});
 }

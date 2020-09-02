@@ -230,13 +230,8 @@ li {
   animation: playerCutAnimation 300ms ease-in 5;
 }
 
-@keyframes playerCutAnimation {
-  0% {
-    background-color: black;
-  }
-  100% {
-    background-color: #3c2d2d;
-  }
+.color-house.home {
+  animation: homeAnimation 300ms ease-in 5;
 }
 
 .home {
@@ -324,30 +319,8 @@ li {
   display: none;
 }
 
-@keyframes glowingAnimation {
-  0% {
-    transform: scale(1);
-    box-shadow: none;
-  }
-  50% {
-    transform: scale(1.3);
-    box-shadow: 0 0 1.5rem 0 black;
-  }
-}
-
-@keyframes homeAnimation {
-  0% {
-    background-color: #f23b3b;
-  }
-  25% {
-    background-color: #328b32;
-  }
-  50% {
-    background-color: #34ea26;
-  }
-  100% {
-    background-color: #7171bb;
-  }
+.player.cut {
+  animation: playerCutAnimation 300ms ease-in 5;
 }
 
 .dice {
@@ -432,14 +405,31 @@ li {
   z-index: -1;
 }
 
-@keyframes diceRollAnimation {
-  0% {
-    transform: scale(1);
-    color: transparent;
+@media screen and (max-width: 700px) {
+  .dice {
+    height: 4.4rem;
+    width: 4.4rem;
   }
-  100% {
-    transform: scale(0);
-    color: transparent;
+}
+
+@media screen and (max-width: 600px) {
+  .dice {
+    height: 4.75rem;
+    width: 4.75rem;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .dice {
+    height: 4.95rem;
+    width: 4.95rem;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .dice {
+    height: 5rem;
+    width: 5rem;
   }
 }
 
@@ -613,6 +603,13 @@ li {
   z-index: 5;
 }
 
+@media screen and (max-width: 500px) {
+  .begin-game-modal button {
+    padding: 0.95rem 2rem;
+    font-size: 1.95rem;
+  }
+}
+
 .players-select,
 .players-info {
   padding: 1.5rem;
@@ -739,6 +736,16 @@ li {
   display: none;
 }
 
+@media screen and (max-width: 500px) {
+  .players-info .user-row input {
+    height: 3.8rem;
+  }
+  .players-info .user-row .user-color {
+    height: 4rem;
+    width: 4rem;
+  }
+}
+
 .players-info.show {
   display: block;
 }
@@ -785,4 +792,59 @@ li {
   text-transform: capitalize;
   font-size: 2rem;
   letter-spacing: 3px;
+}
+
+@media screen and (max-width: 500px) {
+  .modal .modal-header-primary {
+    font-size: 4rem;
+  }
+  .modal .modal-header-secondary {
+    font-size: 2.8rem;
+  }
+}
+
+@keyframes playerCutAnimation {
+  0% {
+    background-color: black;
+  }
+  100% {
+    background-color: #3c2d2d;
+  }
+}
+
+@keyframes homeAnimation {
+  0% {
+    background-color: #f23b3b;
+  }
+  25% {
+    background-color: #328b32;
+  }
+  50% {
+    background-color: #34ea26;
+  }
+  100% {
+    background-color: #7171bb;
+  }
+}
+
+@keyframes glowingAnimation {
+  0% {
+    transform: scale(1);
+    box-shadow: none;
+  }
+  50% {
+    transform: scale(1.3);
+    box-shadow: 0 0 1.5rem 0 black;
+  }
+}
+
+@keyframes diceRollAnimation {
+  0% {
+    transform: scale(1);
+    color: transparent;
+  }
+  100% {
+    transform: scale(0);
+    color: transparent;
+  }
 }
