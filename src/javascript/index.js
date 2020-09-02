@@ -373,7 +373,7 @@ elements.gameBoard.addEventListener("click", (event) => {
 		if (event.target.classList.contains("in-house-player")) {
 			movePlayerToBracketId(event.target, players[currentTurn].start);
 		} else {
-			moveForward(event.target, currentBracketId);
+			moveForward(event.target);
 		}
 	}
 });
@@ -399,28 +399,31 @@ function movePlayerToBracketId(player, nextBracketId) {
 
 	let bracket = document.getElementById(nextBracketId);
 
+	// setTimeout(function () {
+	// 	bracket.innerHTML += ` <div class="${playerClass}" id=${playerId}></div> `;
+
+	// 	currentBracketId = bracket.id;
+
+	// 	checkEachBracket("overlap");
+	// }, 500);
+
 	document.getElementById(playerId).remove();
-	//player.remove();
 
 	bracket.innerHTML += ` <div class="${playerClass}" id=${playerId}></div> `;
 
 	currentBracketId = bracket.id;
 
 	checkEachBracket("overlap");
-
-	// if (faceValue !== 6 && home !== true && cut !== true) {
-	// 	setTurn(players[currentTurn].next);
-	// }
 }
 
 //it moves the clicked player forward
 function moveForward(player) {
-	let currentBracketIdNum = getBracketIdNum(currentBracketId);
-
 	for (let i = 0; i < faceValue; i++) {
+		let currentBracketIdNum = getBracketIdNum(currentBracketId);
+
 		let nextBracketId;
 
-		nextBracketId = getNextBracketId(currentBracketIdNum + i);
+		nextBracketId = getNextBracketId(currentBracketIdNum);
 
 		if (nextBracketId === "bracket45" && currentTurn !== "red") {
 			nextBracketId = `bracket${faceValue - i}`;
@@ -479,7 +482,7 @@ function moveForward(player) {
 
 	checkEachBracket();
 
-	if (faceValue !== 6 && home !== true) {
+	if (faceValue !== 6 && home !== true && cut !== true) {
 		setTurn(players[currentTurn].next);
 	}
 }
@@ -562,10 +565,11 @@ function cutPlayers(players) {
 
 		player.classList.add("cut");
 
+		cut = true;
+
 		setTimeout(function () {
 			sendPlayerToHouse(player, room);
 			checkEachBracket("overlap");
-			cut = true;
 		}, 700);
 
 		setTimeout(function () {
