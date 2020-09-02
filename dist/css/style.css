@@ -323,20 +323,6 @@ li {
   animation: playerCutAnimation 300ms ease-in 5;
 }
 
-@media screen and (max-width: 500px) {
-  .player {
-    height: 3.5rem;
-    width: 3.5rem;
-  }
-}
-
-@media screen and (max-width: 400px) {
-  .player {
-    height: 3.7rem;
-    width: 3.7rem;
-  }
-}
-
 .dice {
   background-color: white;
   height: 4.2rem;
