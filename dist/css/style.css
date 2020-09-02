@@ -568,18 +568,11 @@ li {
   border-radius: 7px;
   box-shadow: 0 0 9rem 0 rgba(0, 0, 0, 0.5);
   position: relative;
-  height: 28rem;
-  width: 35rem;
   z-index: 5;
 }
 
 .players-select,
 .players-info {
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 100%;
   padding: 1.5rem;
 }
 
@@ -587,18 +580,39 @@ li {
   display: block;
 }
 
-.players-select h2 {
-  text-align: center;
-  margin-bottom: 2rem;
-  font-size: 2.5rem;
-}
-
 .players-select .players-options {
   display: flex;
   justify-content: space-around;
   align-items: center;
   padding: 0.7rem;
-  margin-bottom: 2.5rem;
+  margin-bottom: 3rem;
+}
+
+.players-select h1 .ludo {
+  display: inline-block;
+  margin: 0 auto;
+}
+
+.players-select h1 .ludo .l {
+  color: #f23b3b;
+}
+
+.players-select h1 .ludo .u {
+  color: #328b32;
+}
+
+.players-select h1 .ludo .d {
+  color: #34ea26;
+}
+
+.players-select h1 .ludo .o {
+  color: #7171bb;
+}
+
+.players-select h2 {
+  margin-bottom: 2rem;
+  text-align: center;
+  font-size: 2.2rem;
 }
 
 .players-select .player-option {
@@ -621,13 +635,15 @@ li {
 
 .players-info {
   display: none;
-  padding: 2.5rem 0;
+}
+
+.players-info .modal-header.modal-header-secondary {
+  margin-bottom: 3rem;
+  font-size: 2.4rem;
 }
 
 .players-info .user-row {
-  display: flex;
-  justify-content: center;
-  align-items: start;
+  margin-bottom: 2.5rem;
 }
 
 .players-info .user-row input {
@@ -635,11 +651,17 @@ li {
   border-radius: 5px;
   outline: none;
   border: 2px solid #3c2d2d;
-  margin-bottom: 1.3rem;
   font-size: 1.7rem;
   padding: 0.7rem 2rem;
   font-weight: 700;
-  width: 25rem;
+  display: block;
+  margin: 0 auto 1.1rem auto;
+}
+
+.players-info .user-row .user-colors {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .players-info .user-row .user-color {
@@ -647,6 +669,8 @@ li {
   width: 3rem;
   margin-left: 1.5rem;
   border-radius: 3px;
+  cursor: pointer;
+  color: transparent;
 }
 
 .players-info .user-row .user-color-red {
@@ -663,6 +687,10 @@ li {
 
 .players-info .user-row .user-color-blue {
   background-color: #7171bb;
+}
+
+.players-info .user-row .user-color.selected {
+  border: 3px solid #3c2d2d;
 }
 
 .players-info .user-row.hide {
@@ -700,4 +728,19 @@ li {
   left: 50%;
   top: 7%;
   transform: translate(-50%, -50%);
+}
+
+.modal .modal-header {
+  text-align: center;
+  text-transform: capitalize;
+}
+
+.modal .modal-header-primary {
+  font-size: 3rem;
+}
+
+.modal .modal-header-secondary {
+  text-transform: capitalize;
+  font-size: 2rem;
+  letter-spacing: 3px;
 }

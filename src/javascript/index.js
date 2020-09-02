@@ -20,6 +20,7 @@ let players = {
 		homePlayers: [],
 		finishedAllPlayers: false,
 		is: false,
+		userName: "",
 	},
 
 	green: {
@@ -34,6 +35,7 @@ let players = {
 		homePlayers: [],
 		finishedAllPlayers: false,
 		is: false,
+		userName: "",
 	},
 
 	orange: {
@@ -48,6 +50,7 @@ let players = {
 		homePlayers: [],
 		finishedAllPlayers: false,
 		is: false,
+		userName: "",
 	},
 
 	blue: {
@@ -62,10 +65,18 @@ let players = {
 		homePlayers: [],
 		finishedAllPlayers: false,
 		is: false,
+		userName: "",
 	},
 };
 
 let gamePlayingColors = ["red", "green", "orange", "blue"];
+
+let userNames = {
+	red: "",
+	green: "",
+	orange: "",
+	blue: "",
+};
 
 let currentTurn;
 let currentTurnPlayers;
@@ -86,10 +97,7 @@ let fourthPlace;
 
 let numberOfPlayers;
 
-let redPlayerName;
-let greenPlayerName;
-let orangePlayerName;
-let bluePlayerName;
+let selectedColors = [];
 
 elements.playersOptions.addEventListener("click", (event) => {
 	if (event.target.classList.contains("player-option")) {
@@ -97,16 +105,32 @@ elements.playersOptions.addEventListener("click", (event) => {
 
 		numberOfPlayers = Number(event.target.innerText);
 
-		unSelectOthers(event.target);
+		unSelectOthers(event.target, "modal one");
 	}
 });
 
-function unSelectOthers(selected) {
-	elements.playerOptions.forEach((option) => {
-		if (!(option === selected)) {
-			option.classList.remove("selected");
-		}
-	});
+function unSelectOthers(selected, message) {
+	if (message === "modal one") {
+		elements.playerOptions.forEach((option) => {
+			if (!(option === selected)) {
+				option.classList.remove("selected");
+			}
+		});
+	} else if (message === "modal two") {
+		let similarColorOptions = document.querySelectorAll(
+			`.${selected.classList[1]}`
+		);
+
+		let sameRowColors = selected.parentNode.children;
+
+		let toBeUnSelected = [...similarColorOptions, ...sameRowColors];
+
+		toBeUnSelected.forEach((option) => {
+			if (option !== selected) {
+				option.classList.remove("selected");
+			}
+		});
+	}
 }
 
 elements.nextButton.addEventListener("click", () => {
@@ -119,28 +143,57 @@ elements.nextButton.addEventListener("click", () => {
 function showPlayersInfo() {
 	elements.playersInfo.classList.add("show");
 
-	let userRows = Array.from(elements.playersInfo.children);
+	let userRows = Array.from(elements.playersInfo.children).filter((child) => {
+		if (child.classList.contains("user-row")) {
+			return child;
+		}
+	});
 
 	for (let i = numberOfPlayers; i < 4; i++) {
 		userRows[i].classList.add("hide");
 	}
 }
 
+elements.playersInfo.addEventListener("click", (event) => {
+	if (event.target.classList.contains("user-color")) {
+		event.target.classList.add("selected");
+		unSelectOthers(event.target, "modal two");
+	}
+});
+
 function hidePlayersSelect() {
 	elements.playersSelect.classList.add("hide");
 }
 
 elements.playButton.addEventListener("click", () => {
-	document.querySelector(".begin-game-modal-container").classList.add("hide");
+	let userColors = document.querySelectorAll(".user-color");
+	userColors.forEach((userColor) => {
+		if (userColor.classList.contains("selected")) {
+			userNames[userColor.innerText] =
+				userColor.parentNode.parentNode.children[0].value;
+			selectedColors.push(userColor.innerText);
+		}
+	});
 
-	//this sets the basic properties of the board
-	setBoard();
+	if (selectedColors.length >= numberOfPlayers) {
+		document
+			.querySelector(".begin-game-modal-container")
+			.classList.add("hide");
+
+		//this sets the basic properties of the board
+		setBoard();
+	}
 });
 
 function setBoard() {
-	for (let i = 0; i < numberOfPlayers; i++) {
-		players[gamePlayingColors[i]].is = true;
-	}
+	selectedColors.forEach((color) => {
+		players[color].is = true;
+		players[color].userName = userNames[color];
+	});
+
+	document.querySelectorAll(".name-tag").forEach((nameTag) => {
+		nameTag.innerText = players[nameTag.id].userName;
+	});
 
 	gamePlayingColors.forEach((color) => {
 		if (!players[color].is) {
@@ -157,29 +210,6 @@ function setBoard() {
 		}
 	});
 
-	redPlayerName = document.querySelector(".user-red").value;
-	greenPlayerName = document.querySelector(".user-green").value;
-	orangePlayerName = document.querySelector(".user-orange").value;
-	bluePlayerName = document.querySelector(".user-blue").value;
-
-	elements.nameTags.forEach((tag) => {
-		if (tag.classList.contains("red-name-tag")) {
-			tag.innerText = redPlayerName;
-		}
-
-		if (tag.classList.contains("green-name-tag")) {
-			tag.innerText = greenPlayerName;
-		}
-
-		if (tag.classList.contains("orange-name-tag")) {
-			tag.innerText = orangePlayerName;
-		}
-
-		if (tag.classList.contains("blue-name-tag")) {
-			tag.innerText = bluePlayerName;
-		}
-	});
-
 	//the game starts from red
 	currentTurn = "red";
 
@@ -189,8 +219,6 @@ function setBoard() {
 
 	//movePlayerToBracketId("blueplayer2", "bracket25");
 }
-
-console.log(elements.nameTags);
 
 //turn is given to whatever color is in currentTurn
 function setTurn(turn) {

@@ -67,7 +67,7 @@
 					></div>
 				</div>
 
-				<div class="name-tag red-name-tag"></div>
+				<div class="name-tag red-name-tag" id = "red"></div>
 			</div>
 
 			<!-- SECOND TRACK -->
@@ -138,7 +138,7 @@
 					></div>
 				</div>
 
-				<div class="name-tag green-name-tag"></div>
+				<div class="name-tag green-name-tag" id = "green"></div>
 			</div>
 
 			<!-- FIRST TRACK -->
@@ -246,7 +246,7 @@
 					></div>
 				</div>
 
-				<div class="name-tag blue-name-tag"></div>
+				<div class="name-tag blue-name-tag" id = "blue"></div>
 			</div>
 
 			<!-- FOURTH TRACK -->
@@ -315,7 +315,7 @@
 					></div>
 				</div>
 
-				<div class="name-tag orange-name-tag"></div>
+				<div class="name-tag orange-name-tag" id = "orange"></div>
 			</div>
 		</div>
 
@@ -355,20 +355,29 @@
 			</div>
 		</div>
 
-		<div class="gameover-modal">
+		<div class="modal gameover-modal">
 			<div class="gameover-modal-body">
-				<h1>game over</h1>
+				<h1 class="modal-header modal-header-primary">game over</h1>
 				<div class="message"></div>
 				<button class="reset-button">reset</button>
 				<button class="keep-playing-button">keep playing</button>
 			</div>
 		</div>
 
-		<div class="begin-game-modal-container">
+		<div class="modal begin-game-modal-container">
 			<div class="begin-game-modal">
 				<div class="players-select">
-					<h2>how many players?</h2>
-
+					<h1 class="modal-header modal-header-primary">
+						<span class="ludo">
+							<span class="l">l</span>
+							<span class="u">u</span>
+							<span class="d">d</span>
+							<span class="o">o</span>
+						</span>
+					</h1>
+					<h2 class="modal-header modal-header-secondary">
+						number of players
+					</h2>
 					<div class="players-options">
 						<div class="player-option">2</div>
 						<div class="player-option">3</div>
@@ -379,47 +388,80 @@
 				</div>
 
 				<div class="players-info">
+					<h2 class="modal-header modal-header-secondary">
+						select the colors and names
+					</h2>
+
 					<div id="user1" class="user-row">
 						<input
 							type="text"
-							class="user user-red"
+							class="user-name user-name-player1"
 							id="user1"
-							value="player 1"
+							value="player1"
 						/>
 
-						<div class="user-color user-color-red"></div>
+						<div class="user-colors">
+							<div class="user-color user-color-red">red</div>
+							<div class="user-color user-color-green">green</div>
+							<div class="user-color user-color-orange">
+								orange
+							</div>
+							<div class="user-color user-color-blue">blue</div>
+						</div>
 					</div>
 
 					<div id="user2" class="user-row">
 						<input
 							type="text"
-							class="user user-green"
+							class="user-name user-name-player2"
 							id="user2"
-							value="player 2"
+							value="player2"
 						/>
-						<div class="user-color user-color-green"></div>
+
+						<div class="user-colors">
+							<div class="user-color user-color-red">red</div>
+							<div class="user-color user-color-green">green</div>
+							<div class="user-color user-color-orange">
+								orange
+							</div>
+							<div class="user-color user-color-blue">blue</div>
+						</div>
 					</div>
 
 					<div id="user3" class="user-row">
 						<input
 							type="text"
-							class="user user-orange"
+							class="user-name user-name-player3"
 							id="user3"
-							value="player 3"
+							value="player3"
 						/>
 
-						<div class="user-color user-color-orange"></div>
+						<div class="user-colors">
+							<div class="user-color user-color-red">red</div>
+							<div class="user-color user-color-green">green</div>
+							<div class="user-color user-color-orange">
+								orange
+							</div>
+							<div class="user-color user-color-blue">blue</div>
+						</div>
 					</div>
 
 					<div id="user4" class="user-row">
 						<input
 							type="text"
-							class="user user-blue"
+							class="user-name user-name-player4"
 							id="user4"
-							value="player 4"
+							value="player4"
 						/>
 
-						<div class="user-color user-color-blue"></div>
+						<div class="user-colors">
+							<div class="user-color user-color-red">red</div>
+							<div class="user-color user-color-green">green</div>
+							<div class="user-color user-color-orange">
+								orange
+							</div>
+							<div class="user-color user-color-blue">blue</div>
+						</div>
 					</div>
 
 					<button class="modal-button play-button">play</button>
