@@ -50,4 +50,14 @@
 	&.cut {
 		animation: playerCutAnimation 300ms ease-in 5;
 	}
+
+	@media screen and (max-width: 500px) {
+		height: 3.5rem;
+		width: 3.5rem;
+	}
+
+	@media screen and (max-width: 400px) {
+		height: 3.7rem;
+		width: 3.7rem;
+	}
 }
