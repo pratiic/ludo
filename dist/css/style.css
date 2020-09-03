@@ -446,6 +446,7 @@ li {
   top: 50%;
   transform: translate(-50%, -50%);
   display: none;
+  white-space: nowrap;
 }
 
 .turn-tag.show {
@@ -521,15 +522,16 @@ li {
   text-transform: uppercase;
   margin-bottom: 1rem;
   text-align: center;
+  font-weight: 400;
 }
 
 .gameover-modal-body .message {
-  font-size: 2.5rem;
+  font-size: 2.2rem;
   margin-bottom: 3rem;
 }
 
 .gameover-modal-body .message p {
-  line-height: 0.9;
+  line-height: 1.4;
 }
 
 .gameover-modal-body .message p span {
@@ -557,10 +559,12 @@ li {
   border: none;
   outline: none;
   color: white;
-  padding: 0.2rem 1.1rem;
+  padding: 0.7rem 1.4rem;
   border-radius: 5px;
+  font-size: 1.35rem;
   text-transform: uppercase;
   background-color: #3c2d2d;
+  cursor: pointer;
 }
 
 .gameover-modal-body button.reset-button {
@@ -786,6 +790,7 @@ li {
 
 .modal .modal-header-primary {
   font-size: 3rem;
+  margin-bottom: 2.2rem;
 }
 
 .modal .modal-header-secondary {

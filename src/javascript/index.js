@@ -250,11 +250,11 @@ function setTurn(turn) {
 				tag.classList.remove("show");
 			}
 		});
-
-		setDiceColor(currentTurn);
 	} else {
 		setTurn(players[turn].next);
 	}
+
+	setDiceColor(currentTurn);
 }
 
 //it sets the color of the dice of that of the currentTurn
@@ -336,10 +336,11 @@ function rollTheDice(currentTurn) {
 			if (currentOutsidePlayers.length > 0) {
 				Array.from(currentOutsidePlayers).forEach((player) => {
 					glow(player);
-					if (currentGlowingPlayers.length === 0) {
-						setTurn(players[currentTurn].next);
-					}
 				});
+
+				if (currentGlowingPlayers.length === 0) {
+					setTurn(players[currentTurn].next);
+				}
 			} else {
 				setTurn(players[currentTurn].next);
 			}
@@ -507,6 +508,7 @@ function moveForward(player) {
 	checkEachBracket();
 
 	if (faceValue !== 6 && home !== true && cut !== true) {
+		console.log("pratiic");
 		setTurn(players[currentTurn].next);
 	}
 }
@@ -647,20 +649,20 @@ function showGameOverModal() {
 		changeTurnTag(finishingPlayerTurnTag, "winner");
 
 		players[currentTurn].finishedAllPlayers = true;
-	} else if (!secondPlace) {
+	} else if (winner && !secondPlace) {
 		elements.gameOverModalBody.querySelector(
 			".message"
-		).innerHTML += `<p class = "message-secondPlace">second place: <span class = "${currentTurn}">${currentTurn}</span></p>`;
+		).innerHTML += `<p class = "message-second-place">second place: <span class = "${currentTurn}">${currentTurn}</span></p>`;
 
 		secondPlace = currentTurn;
 
 		changeTurnTag(finishingPlayerTurnTag, "second place");
 
 		players[currentTurn].finishedAllPlayers = true;
-	} else if (!thirdPlace) {
+	} else if (winner && secondPlace && !thirdPlace) {
 		elements.gameOverModalBody.querySelector(
 			".message"
-		).innerHTML += `<p class = "message-thirdPlace">third place: <span class = "${currentTurn}">${currentTurn}</span></p>`;
+		).innerHTML += `<p class = "message-third-place">third place: <span class = "${currentTurn}">${currentTurn}</span></p>`;
 
 		thirdPlace = currentTurn;
 
@@ -669,14 +671,40 @@ function showGameOverModal() {
 		players[currentTurn].finishedAllPlayers = true;
 	}
 
-	if (winner && secondPlace && thirdPlace) {
-		elements.gameOverModalBody.querySelector(
-			".message"
-		).innerHTML += `<p class = "message-fourthPlace">fourth place: <span class = "${getLastPlayer()}">${getLastPlayer()}</span></p>`;
+	let lastPlayer = getLastPlayer();
 
-		changeTurnTag(finishingPlayerTurnTag, "fourth place");
+	let lastPlayerTurnTag = document.querySelector(`.${lastPlayer}-turn-tag`);
 
-		elements.keepPlayingButton.remove();
+	if (numberOfPlayers === 4) {
+		if (winner && secondPlace && thirdPlace) {
+			elements.gameOverModalBody.querySelector(
+				".message"
+			).innerHTML += `<p class = "message-fourth-place">fourth place: <span class = "${lastPlayer}">${lastPlayer}</span></p>`;
+
+			changeTurnTag(lastPlayerTurnTag, "fourth place");
+
+			elements.keepPlayingButton.remove();
+		}
+	} else if (numberOfPlayers === 3) {
+		if (winner && secondPlace) {
+			elements.gameOverModalBody.querySelector(
+				".message"
+			).innerHTML += `<p class = "message-third-place">third place: <span class = "${lastPlayer}">${lastPlayer}</span></p>`;
+
+			changeTurnTag(lastPlayerTurnTag, "third place");
+
+			elements.keepPlayingButton.remove();
+		}
+	} else if (numberOfPlayers === 2) {
+		if (winner) {
+			elements.gameOverModalBody.querySelector(
+				".message"
+			).innerHTML += `<p class = "message-second-place">second place: <span class = "${lastPlayer}">${lastPlayer}</span></p>`;
+
+			changeTurnTag(lastPlayerTurnTag, "second place");
+
+			elements.keepPlayingButton.remove();
+		}
 	}
 
 	setTimeout(function () {
@@ -695,7 +723,10 @@ elements.keepPlayingButton.addEventListener("click", () => {
 
 function getLastPlayer() {
 	for (let i = 0; i < gamePlayingColors.length; i++) {
-		if (players[gamePlayingColors[i]].finishedAllPlayers === false) {
+		if (
+			players[gamePlayingColors[i]].is === true &&
+			players[gamePlayingColors[i]].finishedAllPlayers === false
+		) {
 			return gamePlayingColors[i];
 		}
 	}
