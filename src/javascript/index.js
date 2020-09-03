@@ -100,7 +100,7 @@ let numberOfPlayers;
 let selectedColors = [];
 
 let diceRoll = new Audio();
-diceRoll.src = "./assets/sounds/dice-roll-sound.mp3";
+diceRoll.src = "./assets/sounds/dice-roll-sound.wav";
 
 let playerCut = new Audio();
 playerCut.src = "./assets/sounds/player-cut-sound.wav";
@@ -110,6 +110,9 @@ playerHome.src = "./assets/sounds/player-home-sound.wav";
 
 let playerMove = new Audio();
 playerMove.src = "./assets/sounds/player-move-sound.flac";
+
+let sixRolled = new Audio();
+sixRolled.src = "./assets/sounds/six-rolled-sound.mp3";
 
 elements.playersOptions.addEventListener("click", (event) => {
 	if (event.target.classList.contains("player-option")) {
@@ -321,6 +324,8 @@ function rollTheDice(currentTurn) {
 		faceValue = document.getElementById(faceId).children.length;
 
 		if (faceValue === 6) {
+			sixRolled.play();
+
 			currentTurnPlayers.forEach((player) => {
 				glow(player);
 			});
