@@ -109,7 +109,7 @@ let playerHome = new Audio();
 playerHome.src = "./assets/sounds/player-home-sound.wav";
 
 let playerMove = new Audio();
-playerMove.src = "./assets/sounds/player-move-sound.wav";
+playerMove.src = "./assets/sounds/player-move-sound.flac";
 
 elements.playersOptions.addEventListener("click", (event) => {
 	if (event.target.classList.contains("player-option")) {
@@ -406,6 +406,7 @@ function movePlayerToBracketId(player, nextBracketId) {
 	if (player.classList.contains("in-house-player")) {
 		player.classList.remove("in-house-player");
 		player.classList.add("outside-player");
+		playerMove.play();
 	}
 
 	let playerClass = String(player.classList);
@@ -432,6 +433,8 @@ function movePlayerToBracketId(player, nextBracketId) {
 
 //it moves the clicked player forward
 function moveForward(player) {
+	playerMove.play();
+
 	for (let i = 0; i < faceValue; i++) {
 		let currentBracketIdNum = getBracketIdNum(currentBracketId);
 
