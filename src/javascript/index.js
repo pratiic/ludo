@@ -99,6 +99,18 @@ let numberOfPlayers;
 
 let selectedColors = [];
 
+let diceRoll = new Audio();
+diceRoll.src = "./assets/sounds/dice-roll-sound.mp3";
+
+let playerCut = new Audio();
+playerCut.src = "./assets/sounds/player-cut-sound.wav";
+
+let playerHome = new Audio();
+playerHome.src = "./assets/sounds/player-home-sound.wav";
+
+let playerMove = new Audio();
+playerMove.src = "./assets/sounds/player-move-sound.wav";
+
 elements.playersOptions.addEventListener("click", (event) => {
 	if (event.target.classList.contains("player-option")) {
 		event.target.classList.add("selected");
@@ -289,6 +301,8 @@ function rollTheDice(currentTurn) {
 	home = false;
 	cut = false;
 
+	diceRoll.play();
+
 	let currentInHousePlayers = Array.from(currentTurnPlayers).filter(
 		(player) => {
 			if (player.classList.contains(`${currentTurn}-player`)) {
@@ -462,6 +476,8 @@ function moveForward(player) {
 
 			homePlayerColorHouse.classList.add("home");
 
+			playerHome.play();
+
 			if (players[currentTurn].homePlayers.length === 4) {
 				showGameOverModal();
 			}
@@ -566,6 +582,8 @@ function cutPlayers(players) {
 		player.classList.add("cut");
 
 		cut = true;
+
+		playerCut.play();
 
 		setTimeout(function () {
 			room.parentNode.classList.remove("cut");
