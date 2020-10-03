@@ -420,14 +420,6 @@ function movePlayerToBracketId(player, nextBracketId) {
 
 	let bracket = document.getElementById(nextBracketId);
 
-	// setTimeout(function () {
-	// 	bracket.innerHTML += ` <div class="${playerClass}" id=${playerId}></div> `;
-
-	// 	currentBracketId = bracket.id;
-
-	// 	checkEachBracket("overlap");
-	// }, 500);
-
 	document.getElementById(playerId).remove();
 
 	bracket.innerHTML += ` <div class="${playerClass}" id=${playerId}></div> `;
@@ -508,7 +500,6 @@ function moveForward(player) {
 	checkEachBracket();
 
 	if (faceValue !== 6 && home !== true && cut !== true) {
-		console.log("pratiic");
 		setTurn(players[currentTurn].next);
 	}
 }
@@ -532,11 +523,15 @@ function checkEachBracket(message) {
 			if (bracket.children.length === 2) {
 				bracket.children[0].classList.add("shift-left");
 				bracket.children[1].classList.add("shift-right");
-			} else if (bracket.children.length === 3) {
+			}
+
+			if (bracket.children.length === 3) {
 				bracket.children[0].classList.add("shift-left");
 				bracket.children[1].classList.add("shift-right");
 				bracket.children[2].classList.add("shift-top");
-			} else if (bracket.children.length === 4) {
+			}
+
+			if (bracket.children.length === 4) {
 				bracket.children[0].classList.add("shift-left");
 				bracket.children[1].classList.add("shift-right");
 				bracket.children[2].classList.add("shift-top");
