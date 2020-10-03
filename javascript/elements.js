@@ -1,8 +1,11 @@
+//this is an object that contains all the elements of the game
+
 export let elements = {
 	beginGameModal: document.querySelector(".begin-game-modal"),
 	beginGameModalContainer: document.querySelector(
 		".begin-game-modal-container"
 	),
+
 	playersOptions: document.querySelector(".players-options"),
 	playerOptions: document.querySelectorAll(".player-option"),
 	playersSelect: document.querySelector(".players-select"),

@@ -1,120 +1,57 @@
 import { elements } from "./elements.js";
+import { colors } from "./colors.js";
+import { players } from "./players.js";
+import { gamePlayingColors } from "./gamePlayingColors.js";
+import { userNames } from "./usernames.js";
+import {
+	diceRoll,
+	playerCut,
+	playerHome,
+	playerMove,
+	sixRolled,
+} from "./sounds.js";
 
-let colors = {
-	red: "#f23b3b",
-	green: "#328b32",
-	blue: "#7171bb",
-	orange: "#34ea26",
-};
+//specify whose the current turn is and all the players in that turn
+let currentTurn, currentTurnPlayers;
 
-let players = {
-	red: {
-		start: "bracket2",
-		finish: "bracket44",
-		next: "green",
-		previous: "blue",
-		homeStart: "bracket45",
-		homeEnd: "bracket48",
-		nextToFinish: "bracket1",
-		home: "bracket49",
-		homePlayers: [],
-		finishedAllPlayers: false,
-		is: false,
-		userName: "",
-	},
-
-	green: {
-		start: "bracket13",
-		finish: "bracket11",
-		next: "orange",
-		previous: "red",
-		homeStart: "bracket50",
-		homeEnd: "bracket53",
-		nextToFinish: "bracket12",
-		home: "bracket54",
-		homePlayers: [],
-		finishedAllPlayers: false,
-		is: false,
-		userName: "",
-	},
-
-	orange: {
-		start: "bracket24",
-		finish: "bracket22",
-		next: "blue",
-		previous: "green",
-		homeStart: "bracket55",
-		homeEnd: "bracket58",
-		nextToFinish: "bracket23",
-		home: "bracket59",
-		homePlayers: [],
-		finishedAllPlayers: false,
-		is: false,
-		userName: "",
-	},
-
-	blue: {
-		start: "bracket35",
-		finish: "bracket33",
-		next: "red",
-		previous: "orange",
-		homeStart: "bracket60",
-		homeEnd: "bracket63",
-		nextToFinish: "bracket34",
-		home: "bracket64",
-		homePlayers: [],
-		finishedAllPlayers: false,
-		is: false,
-		userName: "",
-	},
-};
-
-let gamePlayingColors = ["red", "green", "orange", "blue"];
-
-let userNames = {
-	red: "",
-	green: "",
-	orange: "",
-	blue: "",
-};
-
-let currentTurn;
-let currentTurnPlayers;
-
+//the value given by the dice
 let faceValue;
 
+//the id of the bracket that the current player is in
 let currentBracketId;
 
+//it specifies which players can be moved
 let currentGlowingPlayers = [];
 
-let home;
-let cut;
+//these are for changing the turn
+//if a home or cut has been made recently,
+//the turn does not change
+let home, cut;
 
-let winner;
-let secondPlace;
-let thirdPlace;
-let fourthPlace;
+//these specify who won, who came second and so on
+let winner, secondPlace, thirdPlace;
 
+/* 
+
+	below this are the variables for when different menus are shown to
+	the user to choose from
+	
+*/
+
+//specifies how many players the user chose
 let numberOfPlayers;
 
+//specifies what colors the user chose for the players
 let selectedColors = [];
 
-let diceRoll = new Audio();
-diceRoll.src = "./assets/sounds/dice-roll-sound.wav";
+/* ----------
+	here the modals for different game menu start to be displayed
+	--------- */
 
-let playerCut = new Audio();
-playerCut.src = "./assets/sounds/player-cut-sound.wav";
-
-let playerHome = new Audio();
-playerHome.src = "./assets/sounds/player-home-sound.wav";
-
-let playerMove = new Audio();
-playerMove.src = "./assets/sounds/player-move-sound.flac";
-
-let sixRolled = new Audio();
-sixRolled.src = "./assets/sounds/six-rolled-sound.mp3";
-
+//playersOptions is a row that contains different options for
+//the number of players
 elements.playersOptions.addEventListener("click", (event) => {
+	//if one of the options for the number of players is clicked
 	if (event.target.classList.contains("player-option")) {
 		event.target.classList.add("selected");
 
