@@ -10,9 +10,17 @@ import {
 	playerMove,
 	sixRolled,
 } from "./sounds.js";
+import {
+	showPlayersSelectModal,
+	hidePlayersSelectModal,
+	showPlayersInfoModal,
+	unSelectOthers,
+} from "./gameStartModals.js";
+import { setBoard } from "./startGame.js";
+import { currentTurn, setTurn } from "./setTurn.js";
 
-//specify whose the current turn is and all the players in that turn
-let currentTurn, currentTurnPlayers;
+//specifies the players in the current turn
+let currentTurnPlayers;
 
 //the value given by the dice
 let faceValue;
@@ -39,14 +47,17 @@ let winner, secondPlace, thirdPlace;
 */
 
 //specifies how many players the user chose
-let numberOfPlayers;
+export let numberOfPlayers;
 
 //specifies what colors the user chose for the players
-let selectedColors = [];
+export let selectedColors = [];
 
 /* ----------
 	here the modals for different game menu start to be displayed
 	--------- */
+
+//the first modal that shows options to choose the number of players is displayed
+showPlayersSelectModal();
 
 //playersOptions is a row that contains different options for
 //the number of players
@@ -57,65 +68,30 @@ elements.playersOptions.addEventListener("click", (event) => {
 
 		numberOfPlayers = Number(event.target.innerText);
 
+		//when one option is selected, all others are unselected
 		unSelectOthers(event.target, "modal one");
 	}
 });
 
-function unSelectOthers(selected, message) {
-	if (message === "modal one") {
-		elements.playerOptions.forEach((option) => {
-			if (!(option === selected)) {
-				option.classList.remove("selected");
-			}
-		});
-	} else if (message === "modal two") {
-		let similarColorOptions = document.querySelectorAll(
-			`.${selected.classList[1]}`
-		);
-
-		let sameRowColors = selected.parentNode.children;
-
-		let toBeUnSelected = [...similarColorOptions, ...sameRowColors];
-
-		toBeUnSelected.forEach((option) => {
-			if (option !== selected) {
-				option.classList.remove("selected");
-			}
-		});
-	}
-}
-
+//when the next button on the first modal is clicked
 elements.nextButton.addEventListener("click", () => {
+	//if one of the options has been selected
 	if (numberOfPlayers) {
-		showPlayersInfo();
-		hidePlayersSelect();
+		//show the second modal
+		showPlayersInfoModal();
+		//hide the current modal
+		hidePlayersSelectModal();
 	}
 });
 
-function showPlayersInfo() {
-	elements.playersInfo.classList.add("show");
-
-	let userRows = Array.from(elements.playersInfo.children).filter((child) => {
-		if (child.classList.contains("user-row")) {
-			return child;
-		}
-	});
-
-	for (let i = numberOfPlayers; i < 4; i++) {
-		userRows[i].classList.add("hide");
-	}
-}
-
+//when the user selects colors for each of the players
 elements.playersInfo.addEventListener("click", (event) => {
 	if (event.target.classList.contains("user-color")) {
 		event.target.classList.add("selected");
+		//other colors are unselected
 		unSelectOthers(event.target, "modal two");
 	}
 });
-
-function hidePlayersSelect() {
-	elements.playersSelect.classList.add("hide");
-}
 
 elements.playButton.addEventListener("click", () => {
 	let userColors = document.querySelectorAll(".user-color");
@@ -128,76 +104,24 @@ elements.playButton.addEventListener("click", () => {
 	});
 
 	if (selectedColors.length >= numberOfPlayers) {
+		//the modal container is hidden
+		//this shows the game board
 		document
 			.querySelector(".begin-game-modal-container")
 			.classList.add("hide");
 
-		//this sets the basic properties of the board
+		/* 
+			---------
+			here the actual game starts
+			the board is set according to the user's choices
+			the game begins
+			---------
+		*/
+
+		//this is the function that does above mentioned things
 		setBoard();
 	}
 });
-
-function setBoard() {
-	selectedColors.forEach((color) => {
-		players[color].is = true;
-		players[color].userName = userNames[color];
-	});
-
-	document.querySelectorAll(".name-tag").forEach((nameTag) => {
-		nameTag.innerText = players[nameTag.id].userName;
-	});
-
-	gamePlayingColors.forEach((color) => {
-		if (!players[color].is) {
-			Array.from(
-				document.querySelector(`.color-house-${color}-player`).children
-			).forEach((child) => {
-				if (child.classList.contains("room")) {
-					child.children[0].classList.add("hide");
-				}
-				if (child.classList.contains("name-tag")) {
-					child.remove();
-				}
-			});
-		}
-	});
-
-	//the game starts from red
-	currentTurn = "red";
-
-	setTurn(currentTurn);
-
-	setTheDice();
-
-	//movePlayerToBracketId("blueplayer2", "bracket25");
-}
-
-//turn is given to whatever color is in currentTurn
-function setTurn(turn) {
-	if (players[turn].finishedAllPlayers === false && players[turn].is) {
-		currentTurn = turn;
-
-		elements.turnTags.forEach((tag) => {
-			if (
-				tag.classList.contains(`${turn}-turn-tag`) ||
-				tag.classList.contains("finished")
-			) {
-				tag.classList.add("show");
-			} else {
-				tag.classList.remove("show");
-			}
-		});
-	} else {
-		setTurn(players[turn].next);
-	}
-
-	setDiceColor(currentTurn);
-}
-
-//it sets the color of the dice of that of the currentTurn
-function setDiceColor(currentTurn) {
-	elements.dice.style.backgroundColor = colors[currentTurn];
-}
 
 // elements.safeBrackets.forEach((bracket) => {
 // 	bracket.innerText = "x";
@@ -220,15 +144,8 @@ elements.dice.addEventListener("click", (event) => {
 	}
 });
 
-//sets the dice to a random face
-function setTheDice() {
-	let faceId = generateRandomFaceId();
-
-	setFace(faceId);
-}
-
 //it generates a random faceId for the dice
-function generateRandomFaceId() {
+export function generateRandomFaceId() {
 	let faceId = `face${Math.ceil(Math.random() * 6)}`;
 	return faceId;
 }
@@ -291,7 +208,7 @@ function showAnimation() {
 }
 
 //it sets the dice to the random number generated by rollTheDice() function
-function setFace(faceId) {
+export function setFace(faceId) {
 	elements.faces.forEach((face) => {
 		if (face.id === faceId) {
 			face.classList.add("turn");

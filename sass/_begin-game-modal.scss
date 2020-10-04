@@ -101,7 +101,7 @@
 }
 
 .players-info {
-	display: none;
+	display: block;
 
 	.modal-header.modal-header-secondary {
 		margin-bottom: 3rem;
@@ -121,21 +121,6 @@
 			font-weight: 700;
 			display: block;
 			margin: 0 auto 1.1rem auto;
-
-			// &.user {
-			// 	&-red {
-			// 		color: $color-red;
-			// 	}
-			// 	&-green {
-			// 		color: $color-green;
-			// 	}
-			// 	&-orange {
-			// 		color: $color-orange;
-			// 	}
-			// 	&-blue {
-			// 		color: $color-blue;
-			// 	}
-			// }
 		}
 
 		.user-colors {
@@ -187,10 +172,6 @@
 				width: 4rem;
 			}
 		}
-	}
-
-	&.show {
-		display: block;
 	}
 }
 
