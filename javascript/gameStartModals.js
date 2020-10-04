@@ -10,7 +10,7 @@ export function hidePlayersSelectModal() {
 }
 
 export function showPlayersInfoModal() {
-	elements.playersInfo.classList.add("show");
+	elements.playersInfo.classList.remove("hide");
 
 	let userRows = Array.from(elements.playersInfo.children).filter((child) => {
 		if (child.classList.contains("user-row")) {

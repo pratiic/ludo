@@ -18,6 +18,7 @@ import {
 } from "./gameStartModals.js";
 import { setBoard } from "./startGame.js";
 import { currentTurn, setTurn } from "./setTurn.js";
+import { showFirstModal } from "./modalAnimations.js";
 
 //specifies the players in the current turn
 let currentTurnPlayers;
@@ -58,6 +59,7 @@ export let selectedColors = [];
 
 //the first modal that shows options to choose the number of players is displayed
 showPlayersSelectModal();
+showFirstModal();
 
 //playersOptions is a row that contains different options for
 //the number of players

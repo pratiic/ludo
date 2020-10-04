@@ -59,4 +59,10 @@ export let elements = {
 	keepPlayingButton: document.querySelector(".keep-playing-button"),
 
 	beginGameModal: document.querySelector(".begin-game-modal"),
+
+	theLinLudo: document.querySelector(".l"),
+	theUinLudo: document.querySelector(".u"),
+	theDinLudo: document.querySelector(".d"),
+	theOinLudo: document.querySelector(".o"),
+	lettersInLudo: document.querySelector(".ludo").querySelectorAll("span"),
 };

@@ -8,6 +8,7 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	overflow: hidden;
 
 	&.hide {
 		display: none;
@@ -19,8 +20,6 @@
 	border-radius: 7px;
 	box-shadow: 0 0 9rem 0 rgba(0, 0, 0, 0.5);
 	position: relative;
-	// height: 28rem;
-	// width: 35rem;
 	z-index: 5;
 
 	@media screen and (max-width: 500px) {
@@ -56,6 +55,13 @@
 		.ludo {
 			display: inline-block;
 			margin: 0 auto;
+
+			span {
+				opacity: 0;
+				transform: translateY(-50px);
+				display: inline-block;
+				font-size: 3.2rem;
+			}
 
 			.l {
 				color: $color-red;
@@ -172,6 +178,10 @@
 				width: 4rem;
 			}
 		}
+	}
+
+	&.hide {
+		display: none;
 	}
 }
 
