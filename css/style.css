@@ -538,6 +538,7 @@ li {
   justify-content: center;
   align-items: center;
   overflow: hidden;
+  z-index: 7;
 }
 
 .begin-game-modal-container.hide {
@@ -549,7 +550,8 @@ li {
   border-radius: 7px;
   box-shadow: 0 0 9rem 0 rgba(0, 0, 0, 0.5);
   position: relative;
-  z-index: 5;
+  z-index: 9;
+  height: min-content;
 }
 
 @media screen and (max-width: 500px) {
@@ -628,6 +630,7 @@ li {
 
 .players-info {
   display: block;
+  height: min-content;
 }
 
 .players-info .modal-header.modal-header-secondary {

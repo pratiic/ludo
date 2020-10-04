@@ -18,7 +18,11 @@ import {
 } from "./gameStartModals.js";
 import { setBoard } from "./startGame.js";
 import { currentTurn, setTurn } from "./setTurn.js";
-import { showFirstModal } from "./modalAnimations.js";
+import {
+	firstModalAnimation,
+	secondModalAnimation,
+	modalExitAnimation,
+} from "./modalAnimations.js";
 
 //specifies the players in the current turn
 let currentTurnPlayers;
@@ -59,7 +63,9 @@ export let selectedColors = [];
 
 //the first modal that shows options to choose the number of players is displayed
 showPlayersSelectModal();
-showFirstModal();
+
+//the animation for the first modal is shown
+firstModalAnimation();
 
 //playersOptions is a row that contains different options for
 //the number of players
@@ -81,6 +87,10 @@ elements.nextButton.addEventListener("click", () => {
 	if (numberOfPlayers) {
 		//show the second modal
 		showPlayersInfoModal();
+
+		//the animation for the second modal is shown
+		secondModalAnimation();
+
 		//hide the current modal
 		hidePlayersSelectModal();
 	}
@@ -106,12 +116,8 @@ elements.playButton.addEventListener("click", () => {
 	});
 
 	if (selectedColors.length >= numberOfPlayers) {
-		//the modal container is hidden
-		//this shows the game board
-		document
-			.querySelector(".begin-game-modal-container")
-			.classList.add("hide");
-
+		//the animation of modal exit is shown here
+		modalExitAnimation();
 		/* 
 			---------
 			here the actual game starts

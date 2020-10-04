@@ -2,7 +2,7 @@ import { elements } from "./elements.js";
 
 let timeline = gsap.timeline();
 
-export function showFirstModal() {
+export function firstModalAnimation() {
 	timeline
 		.from(elements.beginGameModal, {
 			y: 350,
@@ -21,4 +21,33 @@ export function showFirstModal() {
 			duration: 0.3,
 			ease: "power3.easeout",
 		});
+}
+
+export function secondModalAnimation() {
+	timeline
+		.to(elements.beginGameModal, {
+			scale: 0,
+			duration: 0.3,
+		})
+		.to(elements.beginGameModal, {
+			scale: 1,
+			duration: 0.4,
+			ease: "power0.easeNone",
+		});
+}
+
+export function modalExitAnimation() {
+	timeline
+		.to(elements.beginGameModal, {
+			y: "-150%",
+			duration: 1,
+		})
+		.to(
+			elements.beginGameModalContainer,
+			{
+				y: "-150%",
+				duration: 1,
+			},
+			"-=0.5"
+		);
 }

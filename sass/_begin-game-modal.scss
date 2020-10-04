@@ -9,6 +9,7 @@
 	justify-content: center;
 	align-items: center;
 	overflow: hidden;
+	z-index: 7;
 
 	&.hide {
 		display: none;
@@ -20,7 +21,8 @@
 	border-radius: 7px;
 	box-shadow: 0 0 9rem 0 rgba(0, 0, 0, 0.5);
 	position: relative;
-	z-index: 5;
+	z-index: 9;
+	height: min-content;
 
 	@media screen and (max-width: 500px) {
 		button {
@@ -106,6 +108,7 @@
 
 .players-info {
 	display: block;
+	height: min-content;
 
 	.modal-header.modal-header-secondary {
 		margin-bottom: 3rem;
