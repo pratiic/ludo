@@ -561,7 +561,7 @@ li {
 
 .players-select,
 .players-info {
-  padding: 1.5rem;
+  padding: 2.3rem;
 }
 
 .players-select {
@@ -572,7 +572,7 @@ li {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding: 0.7rem;
+  padding: 0.7m;
   margin-bottom: 3rem;
 }
 
@@ -582,8 +582,6 @@ li {
 }
 
 .players-select h1 .ludo span {
-  opacity: 0;
-  transform: translateY(-50px);
   display: inline-block;
   font-size: 3.2rem;
 }
