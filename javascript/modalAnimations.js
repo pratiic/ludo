@@ -27,12 +27,12 @@ export function secondModalAnimation() {
 	timeline
 		.to(elements.playersSelect, {
 			scale: 0,
-			duration: 1,
+			duration: 0.7,
 			ease: "power3.out",
 		})
 		.from(elements.playersInfo, {
 			scale: 0,
-			duration: 1.5,
+			duration: 0.85,
 			ease: "power4.out",
 		});
 }
