@@ -12,7 +12,6 @@ import {
 } from "./sounds.js";
 import {
 	showPlayersSelectModal,
-	hidePlayersSelectModal,
 	showPlayersInfoModal,
 	unSelectOthers,
 } from "./gameStartModals.js";
@@ -88,11 +87,8 @@ elements.nextButton.addEventListener("click", () => {
 		//show the second modal
 		showPlayersInfoModal();
 
-		//the animation for the second modal is shown
+		//the animation for the second modal is shown and also hides the first modal
 		secondModalAnimation();
-
-		//hide the current modal
-		hidePlayersSelectModal();
 	}
 });
 

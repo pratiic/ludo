@@ -5,10 +5,6 @@ export function showPlayersSelectModal() {
 	elements.playersSelect.classList.remove("hide");
 }
 
-export function hidePlayersSelectModal() {
-	elements.playersSelect.classList.add("hide");
-}
-
 export function showPlayersInfoModal() {
 	elements.playersInfo.classList.remove("hide");
 

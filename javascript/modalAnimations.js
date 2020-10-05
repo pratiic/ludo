@@ -4,10 +4,10 @@ let timeline = gsap.timeline();
 
 export function firstModalAnimation() {
 	timeline
-		.from(elements.beginGameModal, {
-			y: 350,
+		.from(elements.playersSelect, {
+			y: 450,
 			opacity: 0,
-			duration: 0.75,
+			duration: 1,
 			ease: "back.out(1.7)",
 		})
 		.to(elements.lettersInLudo, {
@@ -25,20 +25,21 @@ export function firstModalAnimation() {
 
 export function secondModalAnimation() {
 	timeline
-		.to(elements.beginGameModal, {
+		.to(elements.playersSelect, {
 			scale: 0,
-			duration: 0.3,
+			duration: 1,
+			ease: "power3.out",
 		})
-		.to(elements.beginGameModal, {
-			scale: 1,
-			duration: 0.4,
-			ease: "power0.easeNone",
+		.from(elements.playersInfo, {
+			scale: 0,
+			duration: 1.5,
+			ease: "power4.out",
 		});
 }
 
 export function modalExitAnimation() {
 	timeline
-		.to(elements.beginGameModal, {
+		.to(elements.playersInfo, {
 			y: "-150%",
 			duration: 1,
 		})

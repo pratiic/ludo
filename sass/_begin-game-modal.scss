@@ -16,34 +16,21 @@
 	}
 }
 
-.begin-game-modal {
+.players-select,
+.players-info {
+	padding: 2.3rem;
 	background-color: white;
 	border-radius: 7px;
 	box-shadow: 0 0 9rem 0 rgba(0, 0, 0, 0.5);
-	position: relative;
-	z-index: 9;
-	height: min-content;
-
-	@media screen and (max-width: 500px) {
-		button {
-			padding: 0.95rem 2rem;
-			font-size: 1.95rem;
-		}
-	}
-}
-
-.players-select,
-.players-info {
-	// position: absolute;
-	// left: 0;
-	// top: 0;
-	// height: 100%;
-	// width: 100%;
-	padding: 2.3rem;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 }
 
 .players-select {
 	display: block;
+	padding: 2rem 3.5rem;
 
 	.players-options {
 		display: flex;
@@ -54,6 +41,9 @@
 	}
 
 	h1 {
+		text-align: center;
+		margin-bottom: 2rem;
+		text-transform: uppercase;
 		.ludo {
 			display: inline-block;
 			margin: 0 auto;
@@ -82,13 +72,14 @@
 	}
 
 	h2 {
-		margin-bottom: 2rem;
+		margin-bottom: 2.5rem;
 		text-align: center;
 		font-size: 2.2rem;
+		letter-spacing: 3px;
 	}
 
 	.player-option {
-		font-size: 2.2rem;
+		font-size: 1.8rem;
 		background-color: $color-background;
 		padding: 0.5rem 1.3rem;
 		border-radius: 5px;
@@ -192,8 +183,9 @@
 	background-color: $primary-blue;
 	color: white;
 	border-radius: 5px;
-	padding: 0.5rem 1.3rem;
-	font-size: 1.8rem;
+	padding: 0.7rem 1.3rem;
+	font-size: 1.55rem;
+	font-weight: 500;
 	display: block;
 	margin: auto;
 	cursor: pointer;
