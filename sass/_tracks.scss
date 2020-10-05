@@ -21,6 +21,10 @@
 				&.shift-bottom {
 					top: 40%;
 				}
+
+				&.glow {
+					z-index: 10;
+				}
 			}
 		}
 	}

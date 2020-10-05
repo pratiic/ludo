@@ -378,21 +378,21 @@ function checkEachBracket(message) {
 				}
 			}
 
-			if (bracket.children.length === 2) {
+			if (bracket.children.length >= 2) {
 				bracket.children[0].classList.add("shift-left");
 				bracket.children[1].classList.add("shift-right");
 			}
 
-			if (bracket.children.length === 3) {
-				bracket.children[0].classList.add("shift-left");
-				bracket.children[1].classList.add("shift-right");
+			if (bracket.children.length >= 3) {
+				// bracket.children[0].classList.add("shift-left");
+				// bracket.children[1].classList.add("shift-right");
 				bracket.children[2].classList.add("shift-top");
 			}
 
-			if (bracket.children.length === 4) {
-				bracket.children[0].classList.add("shift-left");
-				bracket.children[1].classList.add("shift-right");
-				bracket.children[2].classList.add("shift-top");
+			if (bracket.children.length >= 4) {
+				// bracket.children[0].classList.add("shift-left");
+				// bracket.children[1].classList.add("shift-right");
+				// bracket.children[2].classList.add("shift-top");
 				bracket.children[3].classList.add("shift-bottom");
 			}
 		} else {
@@ -458,28 +458,6 @@ function cutPlayers(players) {
 }
 
 function sendPlayerToHouse(player, room) {
-	// let playerProperties = player.getBoundingClientRect();
-
-	// let roomProperties = room.getBoundingClientRect();
-
-	// let roomX = parseInt(roomProperties.left);
-	// let roomY = parseInt(roomProperties.top);
-	// let roomHeight = parseInt(roomProperties.height);
-	// let roomWidth = parseInt(roomProperties.width);
-
-	// let playerHeight = parseInt(playerProperties.height);
-	// let playerWidth = parseInt(playerProperties.width);
-
-	// player.style.top = `${
-	// 	roomY + parseInt(roomWidth / 2) - parseInt(playerHeight / 2)
-	// }px`;
-	// player.style.left = `${
-	// 	roomX + parseInt(roomHeight / 2) - parseInt(playerWidth / 2)
-	// }px`;
-
-	// player.style.top = `${roomY}px`;
-	// player.style.left = `${roomX}px`;
-
 	player.classList.remove("outside-player");
 	room.innerHTML += `<div class = "${String(
 		player.classList
