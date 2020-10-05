@@ -1,3 +1,6 @@
+import { gamePlayingColors } from "./gamePlayingColors.js";
+import { players } from "./players.js";
+
 export function getLastPlayer() {
 	for (let i = 0; i < gamePlayingColors.length; i++) {
 		if (

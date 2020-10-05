@@ -1,8 +1,6 @@
 import { elements } from "./elements.js";
 import { players } from "./players.js";
-import { gamePlayingColors } from "./gamePlayingColors.js";
 import { userNames } from "./usernames.js";
-import { playerCut, playerHome, playerMove } from "./sounds.js";
 import {
 	showPlayersSelectModal,
 	showPlayersInfoModal,
@@ -16,10 +14,10 @@ import {
 	modalExitAnimation,
 } from "./modalAnimations.js";
 import { rollTheDice } from "./rollTheDice.js";
-import { getBracketIdNum } from "./bracketId.js";
 import { stopGlowing } from "./glow.js";
 import { moveForward } from "./moveForward.js";
 import { movePlayerToBracketId } from "./movePlayerToBracketId.js";
+import { hideGameOverModal } from "./gameOverModal.js";
 
 //specifies the players in the current turn
 export let currentTurnPlayers;
@@ -189,7 +187,6 @@ elements.resetButton.addEventListener("click", () => {
 });
 
 elements.keepPlayingButton.addEventListener("click", () => {
-	elements.gameOverModal.classList.remove("show");
+	hideGameOverModal();
 	setTurn(players[currentTurn].next);
 });
-

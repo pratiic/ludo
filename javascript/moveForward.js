@@ -1,6 +1,13 @@
 //it moves the clicked player forward
 import { playerMove, playerHome } from "./sounds.js";
-import { faceValue, currentBracketId, setHome, home, cut } from "./index.js";
+import {
+	faceValue,
+	currentBracketId,
+	setHome,
+	home,
+	cut,
+	numberOfPlayers,
+} from "./index.js";
 import { getBracketIdNum, getNextBracketId } from "./bracketId.js";
 import { currentTurn, setTurn } from "./setTurn.js";
 import { players } from "./players.js";
@@ -58,7 +65,7 @@ export function moveForward(player) {
 
 			playerHome.play();
 
-			if (players[currentTurn].homePlayers.length === 4) {
+			if (players[currentTurn].homePlayers.length === 1) {
 				showGameOverModal();
 			}
 

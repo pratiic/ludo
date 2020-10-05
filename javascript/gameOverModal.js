@@ -1,6 +1,9 @@
 import { changeTurnTag } from "./changeTurnTag.js";
 import { players } from "./players.js";
-import { getLastPlayer } from "./getLastPlayer";
+import { getLastPlayer } from "./getLastPlayer.js";
+import { currentTurn } from "./setTurn.js";
+import { elements } from "./elements.js";
+import { numberOfPlayers } from "./index.js";
 
 //these specify who won, who came second and so on
 let winner, secondPlace, thirdPlace;
@@ -81,4 +84,8 @@ export function showGameOverModal() {
 	setTimeout(function () {
 		elements.gameOverModal.classList.add("show");
 	}, 1300);
+}
+
+export function hideGameOverModal() {
+	elements.gameOverModal.classList.remove("show");
 }
