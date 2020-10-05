@@ -7,3 +7,7 @@ export function getBracketIdNum(bracketId) {
 	});
 	return Number(currentBracketIdNumArr.join(""));
 }
+
+export function getNextBracketId(bracketId) {
+	return `bracket${bracketId + 1}`;
+}

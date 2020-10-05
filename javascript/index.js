@@ -18,6 +18,8 @@ import {
 import { rollTheDice } from "./rollTheDice.js";
 import { getBracketIdNum } from "./bracketId.js";
 import { stopGlowing } from "./glow.js";
+import { moveForward } from "./moveForward.js";
+import { movePlayerToBracketId } from "./movePlayerToBracketId.js";
 
 //specifies the players in the current turn
 export let currentTurnPlayers;
@@ -26,7 +28,11 @@ export let currentTurnPlayers;
 export let faceValue;
 
 //the id of the bracket that the current player is in
-let currentBracketId;
+export let currentBracketId;
+
+export function setCurrentBracketId(bracketId) {
+	currentBracketId = bracketId;
+}
 
 //it specifies which players can be moved
 export let currentGlowingPlayers = [];
@@ -34,10 +40,8 @@ export let currentGlowingPlayers = [];
 //these are for changing the turn
 //if a home or cut has been made recently,
 //the turn does not change
-let home, cut;
 
-//these specify who won, who came second and so on
-let winner, secondPlace, thirdPlace;
+export let home, cut;
 
 /* 
 
@@ -180,274 +184,6 @@ elements.gameBoard.addEventListener("click", (event) => {
 	}
 });
 
-//it moves the clicked player to the bracket of the id
-function movePlayerToBracketId(player, nextBracketId) {
-	if (player.classList.contains("in-house-player")) {
-		player.classList.remove("in-house-player");
-		player.classList.add("outside-player");
-		playerMove.play();
-	}
-
-	let playerClass = String(player.classList);
-	let playerId = player.id;
-
-	let bracket = document.getElementById(nextBracketId);
-
-	document.getElementById(playerId).remove();
-
-	bracket.innerHTML += ` <div class="${playerClass}" id=${playerId}></div> `;
-
-	currentBracketId = bracket.id;
-
-	checkEachBracket("overlap");
-}
-
-//it moves the clicked player forward
-function moveForward(player) {
-	playerMove.play();
-
-	for (let i = 0; i < faceValue; i++) {
-		let currentBracketIdNum = getBracketIdNum(currentBracketId);
-
-		let nextBracketId;
-
-		nextBracketId = getNextBracketId(currentBracketIdNum);
-
-		if (nextBracketId === "bracket45" && currentTurn !== "red") {
-			nextBracketId = `bracket${faceValue - i}`;
-			movePlayerToBracketId(player, nextBracketId);
-			break;
-		}
-
-		if (nextBracketId === `${players[currentTurn].nextToFinish}`) {
-			let homeStartBracketIdNum = getBracketIdNum(
-				players[currentTurn].homeStart
-			);
-			nextBracketId = `bracket${
-				homeStartBracketIdNum + (faceValue - i - 1)
-			}`;
-			movePlayerToBracketId(player, nextBracketId);
-			break;
-		}
-
-		if (nextBracketId === `${players[currentTurn].home}`) {
-			nextBracketId = players[currentTurn].home;
-			movePlayerToBracketId(player, nextBracketId);
-			home = true;
-
-			let homePlayer = document.getElementById(player.id);
-
-			players[currentTurn].homePlayers = [
-				...players[currentTurn].homePlayers,
-				homePlayer,
-			];
-
-			homePlayer.classList.add("home");
-
-			let homePlayerColorHouse = document.querySelector(
-				`.color-house-${currentTurn}-player`
-			);
-
-			homePlayerColorHouse.classList.add("home");
-
-			playerHome.play();
-
-			if (players[currentTurn].homePlayers.length === 4) {
-				showGameOverModal();
-			}
-
-			setTimeout(function () {
-				homePlayer.classList.remove("home");
-				homePlayerColorHouse.classList.remove("home");
-			}, 1500);
-
-			document
-				.getElementById(`${player.id}`)
-				.classList.remove("outside-player");
-			break;
-		}
-
-		movePlayerToBracketId(player, nextBracketId);
-	}
-
-	checkEachBracket();
-
-	if (faceValue !== 6 && home !== true && cut !== true) {
-		setTurn(players[currentTurn].next);
-	}
-}
-
-function getNextBracketId(bracketId) {
-	return `bracket${bracketId + 1}`;
-}
-
-function checkEachBracket(message) {
-	let brackets = document.querySelectorAll(".bracket");
-
-	brackets.forEach((bracket) => {
-		if (bracket.children.length > 1) {
-			if (!message) {
-				if (!bracket.classList.contains("safe-bracket")) {
-					cutPlayers(Array.from(bracket.children));
-					//checkEachBracket();
-				}
-			}
-
-			if (bracket.children.length >= 2) {
-				bracket.children[0].classList.add("shift-left");
-				bracket.children[1].classList.add("shift-right");
-			}
-
-			if (bracket.children.length >= 3) {
-				// bracket.children[0].classList.add("shift-left");
-				// bracket.children[1].classList.add("shift-right");
-				bracket.children[2].classList.add("shift-top");
-			}
-
-			if (bracket.children.length >= 4) {
-				// bracket.children[0].classList.add("shift-left");
-				// bracket.children[1].classList.add("shift-right");
-				// bracket.children[2].classList.add("shift-top");
-				bracket.children[3].classList.add("shift-bottom");
-			}
-		} else {
-			Array.from(bracket.children).forEach((child) => {
-				child.classList.remove("shift-left");
-				child.classList.remove("shift-right");
-				child.classList.remove("shift-top");
-				child.classList.remove("shift-bottom");
-			});
-		}
-	});
-}
-
-function cutPlayers(players) {
-	let cuttingPlayer = players[players.length - 1];
-	let cutPlayers = [];
-	for (let i = 0; i < players.length - 1; i++) {
-		if (!players[i].classList.contains(`${cuttingPlayer.classList[1]}`)) {
-			cutPlayers.push(players[i]);
-		}
-	}
-
-	cutPlayers.forEach((player) => {
-		let colorHouse = document.querySelector(
-			`.color-house-${player.classList[1]}`
-		);
-		let colorHouseRooms = colorHouse.children;
-		let emptyHouseRooms = [];
-
-		Array.from(colorHouseRooms).forEach((room) => {
-			if (room.classList.contains("room") && room.children.length === 0) {
-				emptyHouseRooms.push(room);
-			}
-		});
-
-		let room = emptyHouseRooms[0];
-
-		room.parentNode.classList.add("cut");
-
-		player.classList.add("cut");
-
-		cut = true;
-
-		playerCut.play();
-
-		setTimeout(function () {
-			room.parentNode.classList.remove("cut");
-			player.classList.remove("cut");
-			sendPlayerToHouse(player, room);
-			checkEachBracket("overlap");
-		}, 1500);
-	});
-}
-
-function sendPlayerToHouse(player, room) {
-	player.classList.remove("outside-player");
-	room.innerHTML += `<div class = "${String(
-		player.classList
-	)} in-house-player" id = "${player.id}"></div>`;
-	player.remove();
-}
-
-function showGameOverModal() {
-	let finishingPlayerTurnTag = document.querySelector(
-		`.${currentTurn}-turn-tag`
-	);
-
-	if (!winner) {
-		elements.gameOverModalBody.querySelector(
-			".message"
-		).innerHTML += `<p class = "message-winner">winner: <span class = "${currentTurn}">${currentTurn}</span></p>`;
-
-		winner = currentTurn;
-
-		changeTurnTag(finishingPlayerTurnTag, "winner");
-
-		players[currentTurn].finishedAllPlayers = true;
-	} else if (winner && !secondPlace) {
-		elements.gameOverModalBody.querySelector(
-			".message"
-		).innerHTML += `<p class = "message-second-place">second place: <span class = "${currentTurn}">${currentTurn}</span></p>`;
-
-		secondPlace = currentTurn;
-
-		changeTurnTag(finishingPlayerTurnTag, "second place");
-
-		players[currentTurn].finishedAllPlayers = true;
-	} else if (winner && secondPlace && !thirdPlace) {
-		elements.gameOverModalBody.querySelector(
-			".message"
-		).innerHTML += `<p class = "message-third-place">third place: <span class = "${currentTurn}">${currentTurn}</span></p>`;
-
-		thirdPlace = currentTurn;
-
-		changeTurnTag(finishingPlayerTurnTag, "third place");
-
-		players[currentTurn].finishedAllPlayers = true;
-	}
-
-	let lastPlayer = getLastPlayer();
-
-	let lastPlayerTurnTag = document.querySelector(`.${lastPlayer}-turn-tag`);
-
-	if (numberOfPlayers === 4) {
-		if (winner && secondPlace && thirdPlace) {
-			elements.gameOverModalBody.querySelector(
-				".message"
-			).innerHTML += `<p class = "message-fourth-place">fourth place: <span class = "${lastPlayer}">${lastPlayer}</span></p>`;
-
-			changeTurnTag(lastPlayerTurnTag, "fourth place");
-
-			elements.keepPlayingButton.remove();
-		}
-	} else if (numberOfPlayers === 3) {
-		if (winner && secondPlace) {
-			elements.gameOverModalBody.querySelector(
-				".message"
-			).innerHTML += `<p class = "message-third-place">third place: <span class = "${lastPlayer}">${lastPlayer}</span></p>`;
-
-			changeTurnTag(lastPlayerTurnTag, "third place");
-
-			elements.keepPlayingButton.remove();
-		}
-	} else if (numberOfPlayers === 2) {
-		if (winner) {
-			elements.gameOverModalBody.querySelector(
-				".message"
-			).innerHTML += `<p class = "message-second-place">second place: <span class = "${lastPlayer}">${lastPlayer}</span></p>`;
-
-			changeTurnTag(lastPlayerTurnTag, "second place");
-
-			elements.keepPlayingButton.remove();
-		}
-	}
-
-	setTimeout(function () {
-		elements.gameOverModal.classList.add("show");
-	}, 1300);
-}
-
 elements.resetButton.addEventListener("click", () => {
 	location.reload();
 });
@@ -457,19 +193,3 @@ elements.keepPlayingButton.addEventListener("click", () => {
 	setTurn(players[currentTurn].next);
 });
 
-function getLastPlayer() {
-	for (let i = 0; i < gamePlayingColors.length; i++) {
-		if (
-			players[gamePlayingColors[i]].is === true &&
-			players[gamePlayingColors[i]].finishedAllPlayers === false
-		) {
-			return gamePlayingColors[i];
-		}
-	}
-}
-
-function changeTurnTag(tag, message) {
-	tag.innerText = message;
-	tag.classList.add("show");
-	tag.classList.add("finished");
-}
